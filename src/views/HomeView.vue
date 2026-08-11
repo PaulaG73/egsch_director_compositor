@@ -52,26 +52,73 @@
   <!-- Trayectoria -->
   <section id="trayectoria" class="home-section home-section--ink home-section--trayectoria py-4 py-md-5">
     <div class="container trayectoria">
-      <h2 class="section-title mb-4 mb-md-5">{{ t('nav.trayectoria') }}</h2>
-      <div ref="trayectoriaItemsRef" class="trayectoria__items">
-        <article
-          v-for="(item, index) in trayectoriaItems"
-          :key="item.mark"
-          class="trayectoria__item"
-          :class="{ 'trayectoria__item--in-view': trayectoriaInView }"
-          :style="{ '--trayectoria-i': index }"
+      <h2 class="section-title mb-3 mb-md-4">{{ t('nav.trayectoria') }}</h2>
+
+      <div
+        ref="trayectoriaItemsRef"
+        class="trayectoria__carousel"
+        :class="{ 'trayectoria__carousel--in-view': trayectoriaInView }"
+      >
+        <button
+          type="button"
+          class="trayectoria__arrow trayectoria__arrow--prev"
+          aria-label="Hito anterior"
+          @click="trayectoriaPrev"
         >
-          <span class="trayectoria__mark" aria-hidden="true">{{ item.mark }}</span>
-          <div class="trayectoria__body">
-            <h3 class="trayectoria__item-title">{{ item.title }}</h3>
-            <ScrollRevealLines
-              class="trayectoria__lead"
-              :text="item.text"
-              :active="trayectoriaInView"
-            />
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+            <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
+          </svg>
+        </button>
+
+        <div class="trayectoria__viewport">
+          <div
+            class="trayectoria__track"
+            :style="{ '--trayectoria-slide': trayectoriaSlide }"
+          >
+            <article
+              v-for="(item, index) in trayectoriaItems"
+              :key="item.mark"
+              class="trayectoria__item"
+              :class="{ 'trayectoria__item--in-view': trayectoriaInView }"
+              :style="{ '--trayectoria-i': index }"
+            >
+              <span class="trayectoria__mark" aria-hidden="true">{{ item.mark }}</span>
+              <div class="trayectoria__body">
+                <h3 class="trayectoria__item-title">{{ item.title }}</h3>
+                <p class="trayectoria__lead mb-0">{{ item.text }}</p>
+              </div>
+            </article>
           </div>
-        </article>
+        </div>
+
+        <button
+          type="button"
+          class="trayectoria__arrow trayectoria__arrow--next"
+          aria-label="Hito siguiente"
+          @click="trayectoriaNext"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
+          </svg>
+        </button>
       </div>
+
+      <div class="trayectoria__dots" role="tablist" aria-label="Hitos de trayectoria">
+        <button
+          v-for="(item, index) in trayectoriaItems"
+          :key="`dot-${item.mark}`"
+          type="button"
+          class="trayectoria__dot"
+          :class="{ 'trayectoria__dot--active': trayectoriaSlide === index }"
+          role="tab"
+          :aria-selected="trayectoriaSlide === index"
+          :aria-label="`Ir a ${item.title}`"
+          @click="goToTrayectoria(index)"
+        >
+          {{ item.mark }}
+        </button>
+      </div>
+
       <SectionScrollUp />
     </div>
   </section>
@@ -185,7 +232,6 @@ import NavBar from '../components/NavBar'
 import FooterComponent from '../components/FooterComponent.vue'
 import ProductCarousel from '../components/ProductCarousel.vue'
 import SectionScrollUp from '../components/SectionScrollUp.vue'
-import ScrollRevealLines from '../components/ScrollRevealLines.vue'
 import ServiceDetailModal from '../components/ServiceDetailModal.vue'
 import productosSinfonicos from '../data/productosSinfonicos.json'
 import musicaPeliculas from '../data/musicaPeliculas.json'
@@ -246,10 +292,24 @@ const heroFotoShellRef = ref(null)
 const heroFotoInView = ref(false)
 const trayectoriaItemsRef = ref(null)
 const trayectoriaInView = ref(false)
+const trayectoriaSlide = ref(0)
 const reduceMotion = ref(false)
 
 let heroFotoObserver = null
 let trayectoriaObserver = null
+
+function goToTrayectoria(index) {
+  const total = trayectoriaItems.length
+  trayectoriaSlide.value = ((index % total) + total) % total
+}
+
+function trayectoriaPrev() {
+  goToTrayectoria(trayectoriaSlide.value - 1)
+}
+
+function trayectoriaNext() {
+  goToTrayectoria(trayectoriaSlide.value + 1)
+}
 
 function setupHeroFotoReveal() {
   if (reduceMotion.value) {
@@ -383,12 +443,12 @@ onUnmounted(() => {
   pointer-events: none;
   background:
     radial-gradient(
-      ellipse 70% 55% at 18% 28%,
-      rgba(var(--ms-accent-rgb), 0.16) 0%,
-      transparent 62%
+      ellipse 55% 50% at 12% 35%,
+      rgba(var(--ms-accent-rgb), 0.14) 0%,
+      transparent 65%
     ),
     radial-gradient(
-      ellipse 55% 45% at 88% 78%,
+      ellipse 45% 40% at 92% 70%,
       rgba(var(--ms-accent-rgb), 0.08) 0%,
       transparent 70%
     );
@@ -400,54 +460,58 @@ onUnmounted(() => {
   text-align: center;
 }
 
-.trayectoria__items {
-  display: grid;
-  gap: 0;
-  text-align: left;
+.trayectoria__carousel {
   position: relative;
-  padding-left: 0.15rem;
+  text-align: left;
 }
 
-.trayectoria__items::before {
+/* Controles solo en md+ */
+.trayectoria__arrow,
+.trayectoria__dots {
+  display: none;
+}
+
+.trayectoria__viewport {
+  position: relative;
+}
+
+.trayectoria__track {
+  display: grid;
+  gap: 1.35rem;
+  position: relative;
+}
+
+/* Móvil: eje vertical */
+.trayectoria__track::before {
   content: '';
   position: absolute;
-  left: 1.25rem;
-  top: 0.7rem;
-  bottom: 0.7rem;
-  width: 2px;
+  left: 1.15rem;
+  top: 0.55rem;
+  bottom: 0.55rem;
+  width: 1px;
   background: linear-gradient(
     180deg,
-    rgba(var(--ms-accent-rgb), 0.85) 0%,
-    rgba(var(--ms-accent-rgb), 0.35) 45%,
-    rgba(var(--ms-accent-rgb), 0.08) 100%
+    rgba(var(--ms-accent-rgb), 0.75) 0%,
+    rgba(var(--ms-accent-rgb), 0.2) 100%
   );
-  box-shadow: 0 0 18px rgba(var(--ms-accent-rgb), 0.25);
 }
 
 .trayectoria__item {
   display: grid;
-  grid-template-columns: 2.5rem minmax(0, 1fr);
-  gap: 0.9rem 1.15rem;
+  grid-template-columns: 2.3rem minmax(0, 1fr);
+  gap: 0.75rem 0.95rem;
   align-items: start;
-  padding: 1.5rem 0.35rem 1.7rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
   opacity: 0;
-  transform: translateY(1.1rem);
+  transform: translateX(-1.1rem);
   transition:
-    opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 0.25s ease;
-  transition-delay: calc(var(--trayectoria-i, 0) * 0.14s);
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--trayectoria-i, 0) * 0.12s);
 }
 
 .trayectoria__item--in-view {
   opacity: 1;
-  transform: translateY(0);
-}
-
-.trayectoria__item:last-child {
-  border-bottom: none;
-  padding-bottom: 0.4rem;
+  transform: translateX(0);
 }
 
 .trayectoria__mark {
@@ -456,44 +520,44 @@ onUnmounted(() => {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.3rem;
+  height: 2.3rem;
   font-family: var(--font-display);
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   color: #e8f0fb;
   background:
     radial-gradient(
       circle at 35% 30%,
-      rgba(168, 196, 232, 0.45) 0%,
-      rgba(var(--ms-accent-rgb), 0.55) 42%,
+      rgba(168, 196, 232, 0.4) 0%,
+      rgba(var(--ms-accent-rgb), 0.5) 42%,
       rgba(var(--ms-deep-rgb), 0.98) 78%
     );
-  border: 1px solid rgba(var(--ms-accent-rgb), 0.7);
+  border: 1px solid rgba(var(--ms-accent-rgb), 0.65);
   border-radius: 50%;
   box-shadow:
-    0 0 0 5px var(--ms-ink),
-    0 0 22px rgba(var(--ms-accent-rgb), 0.35);
+    0 0 0 4px var(--ms-ink),
+    0 0 16px rgba(var(--ms-accent-rgb), 0.3);
   line-height: 1;
+  justify-self: center;
 }
 
 .trayectoria__body {
   min-width: 0;
-  padding-top: 0.15rem;
 }
 
 .trayectoria__item-title {
   font-family: var(--font-display);
-  font-size: clamp(1.05rem, 2.6vw, 1.28rem);
+  font-size: clamp(0.92rem, 2vw, 1.05rem);
   font-weight: 600;
-  letter-spacing: 0.055em;
+  letter-spacing: 0.045em;
   line-height: 1.3;
   color: var(--ms-text);
-  margin: 0 0 0.85rem;
+  margin: 0 0 0.55rem;
   position: relative;
   display: inline-block;
-  padding-bottom: 0.45rem;
+  padding-bottom: 0.35rem;
 }
 
 .trayectoria__item-title::after {
@@ -501,51 +565,164 @@ onUnmounted(() => {
   position: absolute;
   left: 0;
   bottom: 0;
-  width: 2.4rem;
+  width: 2rem;
   height: 2px;
   border-radius: 1px;
   background: linear-gradient(
     90deg,
     var(--ms-accent-on-dark) 0%,
-    rgba(var(--ms-accent-rgb), 0.15) 100%
+    rgba(var(--ms-accent-rgb), 0.12) 100%
   );
 }
 
-:deep(.trayectoria__lead) {
+.trayectoria__lead {
   font-family: var(--font-body);
-  font-size: clamp(0.8rem, 1.9vw, 0.9rem);
-  line-height: 1.7;
+  font-size: clamp(0.74rem, 1.55vw, 0.82rem);
+  line-height: 1.6;
   letter-spacing: 0.01em;
-  color: rgba(255, 255, 255, 0.7);
-  max-width: 38rem;
+  color: rgba(255, 255, 255, 0.68);
   text-align: justify;
   text-wrap: pretty;
   hyphens: auto;
+  padding-right: 0.85rem;
 }
 
+/* md+: un hito a la vez, carrusel lateral */
 @media (min-width: 768px) {
-  .trayectoria__items {
-    padding-left: 0.45rem;
+  .trayectoria {
+    max-width: none;
+    width: 100%;
   }
 
-  .trayectoria__items::before {
-    left: 1.5rem;
+  .trayectoria__carousel {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.75rem 1.15rem;
+  }
+
+  .trayectoria__arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.55rem;
+    height: 2.55rem;
+    padding: 0;
+    border: 1px solid rgba(var(--ms-accent-rgb), 0.55);
+    border-radius: 50%;
+    background: rgba(var(--ms-accent-rgb), 0.16);
+    color: var(--ms-accent-on-dark);
+    cursor: pointer;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      transform 0.15s ease;
+  }
+
+  .trayectoria__arrow:hover,
+  .trayectoria__arrow:focus-visible {
+    background: rgba(var(--ms-accent-rgb), 0.3);
+    border-color: rgba(var(--ms-accent-rgb), 0.9);
+  }
+
+  .trayectoria__arrow:active {
+    transform: scale(0.96);
+  }
+
+  .trayectoria__arrow:focus-visible {
+    outline: 2px solid rgba(var(--ms-accent-rgb), 0.45);
+    outline-offset: 2px;
+  }
+
+  .trayectoria__viewport {
+    overflow: hidden;
+    min-width: 0;
+  }
+
+  .trayectoria__track {
+    display: flex;
+    gap: 0;
+    transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    transform: translateX(calc(var(--trayectoria-slide, 0) * -100%));
+  }
+
+  .trayectoria__track::before {
+    display: none;
   }
 
   .trayectoria__item {
-    grid-template-columns: 3rem minmax(0, 1fr);
-    gap: 1.1rem 1.6rem;
-    padding: 1.75rem 0.5rem 1.95rem 0;
+    flex: 0 0 100%;
+    width: 100%;
+    grid-template-columns: 2.7rem minmax(0, 1fr);
+    gap: 1rem 1.25rem;
+    padding: 0.35rem 0.25rem 0.5rem;
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .trayectoria__carousel--in-view .trayectoria__item {
+    opacity: 1;
+    transform: none;
   }
 
   .trayectoria__mark {
-    width: 3rem;
-    height: 3rem;
-    font-size: 0.95rem;
+    width: 2.7rem;
+    height: 2.7rem;
+    font-size: 0.88rem;
+  }
+
+  .trayectoria__item-title {
+    font-size: clamp(1rem, 2vw, 1.15rem);
   }
 
   .trayectoria__item-title::after {
-    width: 3rem;
+    width: 2.4rem;
+  }
+
+  .trayectoria__lead {
+    font-size: clamp(0.84rem, 1.45vw, 0.95rem);
+    line-height: 1.7;
+    max-width: none;
+    padding-right: 0;
+  }
+
+  .trayectoria__dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.55rem;
+    margin-top: 1.15rem;
+  }
+
+  .trayectoria__dot {
+    min-width: 2.1rem;
+    height: 2.1rem;
+    padding: 0 0.4rem;
+    border-radius: 999px;
+    border: 1px solid rgba(var(--ms-accent-rgb), 0.4);
+    background: transparent;
+    color: rgba(255, 255, 255, 0.65);
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .trayectoria__dot:hover,
+  .trayectoria__dot:focus-visible {
+    border-color: rgba(var(--ms-accent-rgb), 0.8);
+    color: var(--ms-text);
+  }
+
+  .trayectoria__dot--active {
+    background: rgba(var(--ms-accent-rgb), 0.28);
+    border-color: rgba(var(--ms-accent-rgb), 0.85);
+    color: var(--ms-accent-on-dark);
   }
 }
 
@@ -553,6 +730,10 @@ onUnmounted(() => {
   .trayectoria__item {
     opacity: 1;
     transform: none;
+    transition: none;
+  }
+
+  .trayectoria__track {
     transition: none;
   }
 }
