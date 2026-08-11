@@ -50,13 +50,28 @@
   </section>
 
   <!-- Trayectoria -->
-  <section id="trayectoria" class="home-section home-section--ink py-4 py-md-5">
+  <section id="trayectoria" class="home-section home-section--ink home-section--trayectoria py-4 py-md-5">
     <div class="container trayectoria">
-      <h2 class="section-title mb-3 mb-md-4">{{ t('nav.trayectoria') }}</h2>
-      <p class="trayectoria__lead mb-0">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua.
-      </p>
+      <h2 class="section-title mb-4 mb-md-5">{{ t('nav.trayectoria') }}</h2>
+      <div ref="trayectoriaItemsRef" class="trayectoria__items">
+        <article
+          v-for="(item, index) in trayectoriaItems"
+          :key="item.mark"
+          class="trayectoria__item"
+          :class="{ 'trayectoria__item--in-view': trayectoriaInView }"
+          :style="{ '--trayectoria-i': index }"
+        >
+          <span class="trayectoria__mark" aria-hidden="true">{{ item.mark }}</span>
+          <div class="trayectoria__body">
+            <h3 class="trayectoria__item-title">{{ item.title }}</h3>
+            <ScrollRevealLines
+              class="trayectoria__lead"
+              :text="item.text"
+              :active="trayectoriaInView"
+            />
+          </div>
+        </article>
+      </div>
       <SectionScrollUp />
     </div>
   </section>
@@ -125,18 +140,30 @@
                 loading="lazy"
               >
             </div>
-            <a
-              class="btn btn-outline-success servicio-card__cta mt-auto"
-              :href="cotizaMailto(t(`services.${servicio.titleKey}`))"
-            >
-              Cotiza aquí
-            </a>
+            <div v-if="servicio.detalle" class="servicio-card__actions mt-auto">
+              <button
+                type="button"
+                class="btn btn-link servicio-card__mas"
+                @click="openServicioDetalle(servicio)"
+              >
+                Ver más
+              </button>
+            </div>
           </article>
         </div>
       </div>
       <SectionScrollUp />
     </div>
   </section>
+
+  <ServiceDetailModal
+    :open="servicioModalOpen"
+    :servicio="servicioModalActivo"
+    :titulo="servicioModalActivo ? t(`services.${servicioModalActivo.titleKey}`) : ''"
+    :cta-label="servicioModalActivo?.ctaLabel || 'Cotiza aquí'"
+    :cotiza-href="servicioModalActivo ? cotizaMailto(t(`services.${servicioModalActivo.titleKey}`)) : '#'"
+    @close="closeServicioDetalle"
+  />
 
   <!-- Testimonios (placeholder) -->
   <section id="testimonios" class="home-section home-section--ink py-4 py-md-5">
@@ -158,6 +185,8 @@ import NavBar from '../components/NavBar'
 import FooterComponent from '../components/FooterComponent.vue'
 import ProductCarousel from '../components/ProductCarousel.vue'
 import SectionScrollUp from '../components/SectionScrollUp.vue'
+import ScrollRevealLines from '../components/ScrollRevealLines.vue'
+import ServiceDetailModal from '../components/ServiceDetailModal.vue'
 import productosSinfonicos from '../data/productosSinfonicos.json'
 import musicaPeliculas from '../data/musicaPeliculas.json'
 import servicios from '../data/servicios.json'
@@ -176,14 +205,51 @@ function cotizaMailto(titulo) {
   return `mailto:${SERVICIOS_EMAIL}?subject=${subject}&body=${body}`
 }
 
+const servicioModalOpen = ref(false)
+const servicioModalActivo = ref(null)
+
+function openServicioDetalle(servicio) {
+  servicioModalActivo.value = servicio
+  servicioModalOpen.value = true
+}
+
+function closeServicioDetalle() {
+  servicioModalOpen.value = false
+  servicioModalActivo.value = null
+}
+
 /** Foto del director en `public/img/image_maestro.jpg` */
 const heroFotoSrc = '/img/image_maestro.jpg'
 
+const trayectoriaItems = [
+  {
+    mark: 'I',
+    title: 'Dirección Sinfónica en La Araucanía',
+    text:
+      'Tras una destacada labor liderando la Orquesta Sinfónica Juvenil Armando Dufey (período consolidado hasta 2025), es actualmente director Titular de la Orquesta Sinfónica de la Universidad Católica de Temuco y de su Coro Sinfónico, impulsando la descentralización de la música clásica con montajes de alto nivel técnico.',
+  },
+  {
+    mark: 'II',
+    title: 'Grandes Óperas en Santiago',
+    text:
+      'En la escena capitalina, destaca de forma recurrente su dirección musical para las producciones de Merlín Comunicaciones. Al mando de la Orquesta Filodramática de Chile, ha liderado con rotundo éxito de crítica y público obras cumbres del repertorio universal, incluyendo títulos estelares como Carmen de Bizet en teatros de renombre como CorpArtes y las conmemoraciones líricas internacionales en homenaje a Puccini (Gianni Schicchi) y Tosca entre otras. Recientemente Pagliacci y Cavalleria Rusticana.',
+  },
+  {
+    mark: 'III',
+    title: 'Catálogo de Partituras desde el Podio',
+    text:
+      'Su experiencia guiando agrupaciones de cámara, coros y grandes orquestas sinfónicas en Europa y Chile se plasma en un catálogo exclusivo de arreglos, composiciones y orquestaciones. Cada partitura en esta tienda garantiza un balance sonoro óptimo, máxima legibilidad y soluciones orquestales pensadas por un director, para directores.',
+  },
+]
+
 const heroFotoShellRef = ref(null)
 const heroFotoInView = ref(false)
+const trayectoriaItemsRef = ref(null)
+const trayectoriaInView = ref(false)
 const reduceMotion = ref(false)
 
 let heroFotoObserver = null
+let trayectoriaObserver = null
 
 function setupHeroFotoReveal() {
   if (reduceMotion.value) {
@@ -213,14 +279,45 @@ function setupHeroFotoReveal() {
   heroFotoObserver.observe(shell)
 }
 
+function setupTrayectoriaReveal() {
+  if (reduceMotion.value) {
+    trayectoriaInView.value = true
+    return
+  }
+  const root = trayectoriaItemsRef.value
+  if (!root) {
+    trayectoriaInView.value = true
+    return
+  }
+  if (typeof IntersectionObserver === 'undefined') {
+    trayectoriaInView.value = true
+    return
+  }
+  trayectoriaObserver = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          trayectoriaInView.value = true
+          trayectoriaObserver?.unobserve(entry.target)
+        }
+      }
+    },
+    { threshold: 0.18, rootMargin: '0px 0px -6% 0px' },
+  )
+  trayectoriaObserver.observe(root)
+}
+
 onMounted(() => {
   reduceMotion.value = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   setupHeroFotoReveal()
+  setupTrayectoriaReveal()
 })
 
 onUnmounted(() => {
   heroFotoObserver?.disconnect()
   heroFotoObserver = null
+  trayectoriaObserver?.disconnect()
+  trayectoriaObserver = null
 })
 
 </script>
@@ -272,17 +369,192 @@ onUnmounted(() => {
   font-size: clamp(0.9rem, 2.2vw, 1rem);
 }
 
+.home-section--trayectoria {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.home-section--trayectoria::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse 70% 55% at 18% 28%,
+      rgba(var(--ms-accent-rgb), 0.16) 0%,
+      transparent 62%
+    ),
+    radial-gradient(
+      ellipse 55% 45% at 88% 78%,
+      rgba(var(--ms-accent-rgb), 0.08) 0%,
+      transparent 70%
+    );
+}
+
 .trayectoria {
-  max-width: 42rem;
+  max-width: 46rem;
   margin-inline: auto;
   text-align: center;
 }
 
-.trayectoria__lead {
+.trayectoria__items {
+  display: grid;
+  gap: 0;
+  text-align: left;
+  position: relative;
+  padding-left: 0.15rem;
+}
+
+.trayectoria__items::before {
+  content: '';
+  position: absolute;
+  left: 1.25rem;
+  top: 0.7rem;
+  bottom: 0.7rem;
+  width: 2px;
+  background: linear-gradient(
+    180deg,
+    rgba(var(--ms-accent-rgb), 0.85) 0%,
+    rgba(var(--ms-accent-rgb), 0.35) 45%,
+    rgba(var(--ms-accent-rgb), 0.08) 100%
+  );
+  box-shadow: 0 0 18px rgba(var(--ms-accent-rgb), 0.25);
+}
+
+.trayectoria__item {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  gap: 0.9rem 1.15rem;
+  align-items: start;
+  padding: 1.5rem 0.35rem 1.7rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  opacity: 0;
+  transform: translateY(1.1rem);
+  transition:
+    opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.25s ease;
+  transition-delay: calc(var(--trayectoria-i, 0) * 0.14s);
+}
+
+.trayectoria__item--in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.trayectoria__item:last-child {
+  border-bottom: none;
+  padding-bottom: 0.4rem;
+}
+
+.trayectoria__mark {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: #e8f0fb;
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      rgba(168, 196, 232, 0.45) 0%,
+      rgba(var(--ms-accent-rgb), 0.55) 42%,
+      rgba(var(--ms-deep-rgb), 0.98) 78%
+    );
+  border: 1px solid rgba(var(--ms-accent-rgb), 0.7);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 5px var(--ms-ink),
+    0 0 22px rgba(var(--ms-accent-rgb), 0.35);
+  line-height: 1;
+}
+
+.trayectoria__body {
+  min-width: 0;
+  padding-top: 0.15rem;
+}
+
+.trayectoria__item-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 2.6vw, 1.28rem);
+  font-weight: 600;
+  letter-spacing: 0.055em;
+  line-height: 1.3;
+  color: var(--ms-text);
+  margin: 0 0 0.85rem;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.45rem;
+}
+
+.trayectoria__item-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 2.4rem;
+  height: 2px;
+  border-radius: 1px;
+  background: linear-gradient(
+    90deg,
+    var(--ms-accent-on-dark) 0%,
+    rgba(var(--ms-accent-rgb), 0.15) 100%
+  );
+}
+
+:deep(.trayectoria__lead) {
   font-family: var(--font-body);
-  font-size: clamp(0.95rem, 2.4vw, 1.1rem);
-  line-height: 1.65;
-  color: var(--ms-text-muted);
+  font-size: clamp(0.8rem, 1.9vw, 0.9rem);
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 38rem;
+  text-align: justify;
+  text-wrap: pretty;
+  hyphens: auto;
+}
+
+@media (min-width: 768px) {
+  .trayectoria__items {
+    padding-left: 0.45rem;
+  }
+
+  .trayectoria__items::before {
+    left: 1.5rem;
+  }
+
+  .trayectoria__item {
+    grid-template-columns: 3rem minmax(0, 1fr);
+    gap: 1.1rem 1.6rem;
+    padding: 1.75rem 0.5rem 1.95rem 0;
+  }
+
+  .trayectoria__mark {
+    width: 3rem;
+    height: 3rem;
+    font-size: 0.95rem;
+  }
+
+  .trayectoria__item-title::after {
+    width: 3rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trayectoria__item {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 /* Hero */
@@ -522,6 +794,31 @@ onUnmounted(() => {
   flex-grow: 1;
 }
 
+.servicio-card__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.45rem;
+  width: 100%;
+}
+
+.servicio-card__mas {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ms-accent-on-dark);
+  text-decoration: none;
+  padding: 0.15rem 0.35rem;
+}
+
+.servicio-card__mas:hover,
+.servicio-card__mas:focus-visible {
+  color: var(--ms-text);
+  text-decoration: underline;
+}
+
 .servicio-card__media {
   width: 78%;
   max-width: 11.5rem;
@@ -539,17 +836,6 @@ onUnmounted(() => {
   aspect-ratio: 4 / 3;
   object-fit: cover;
   border-radius: 0.2rem;
-}
-
-.servicio-card__cta {
-  align-self: center;
-  font-family: var(--font-body);
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  padding: 0.45rem 1.1rem;
-  border-radius: 999px;
 }
 
 @media (prefers-reduced-motion: reduce) {

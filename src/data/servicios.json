@@ -2,28 +2,241 @@
   {
     "id": 1,
     "titleKey": "composiciones",
-    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor.",
+    "descripcion": "¿Buscas una obra única, un arreglo impecable o una orquestación que impacte? Música a la medida de tu talento, creada desde el podio.",
+    "detalle": {
+      "gancho": "¿Buscas una obra única, un arreglo impecable o una orquestación que impacte? Música a la medida de tu talento, creada desde el podio.",
+      "intro": "Con más de 30 años de trayectoria internacional y formación en el Real Conservatorio de Bruselas, pongo mi experiencia como director de orquesta y ópera al servicio de tus proyectos musicales. Escribo, arreglo y orquesto con la rigurosidad técnica que exigen los grandes escenarios y la sensibilidad que conecta con el público.",
+      "secciones": [
+        {
+          "titulo": "Servicios de Composición y Orquestación por Encargo",
+          "items": [
+            {
+              "titulo": "Música Popular y Canciones",
+              "texto": "Arreglos estilizados y maquetación profesional para llevar tu música al siguiente nivel."
+            },
+            {
+              "titulo": "Formatos Íntimos",
+              "texto": "Repertorio exclusivo para Canto y Piano o Instrumento Solista y Piano."
+            },
+            {
+              "titulo": "Música de Cámara",
+              "texto": "Creación y adaptaciones de alta complejidad para Cuartetos y Quintetos."
+            },
+            {
+              "titulo": "Grandes Elencos",
+              "texto": "Composición y orquestación a medida para Orquesta Sinfónica."
+            },
+            {
+              "titulo": "Obras Mayores",
+              "texto": "Creación de Sinfonías, Conciertos para Solistas y Óperas completas."
+            }
+          ]
+        },
+        {
+          "titulo": "¿Por qué elegir mis partituras?",
+          "items": [
+            {
+              "titulo": "Eficacia en el Atril",
+              "texto": "Como director de la Orquesta y Coro Sinfónico de la UCT y director invitado en grandes óperas de Santiago (Orquesta Filodramática de Chile), sé exactamente lo que funciona en los ensayos y brilla en el escenario."
+            },
+            {
+              "titulo": "Balance Sonoro Perfecto",
+              "texto": "Garantía de una instrumentación equilibrada, fluida y adaptada a las capacidades reales de tu elenco."
+            },
+            {
+              "titulo": "Calidad Editorial Internacional",
+              "texto": "Entrega de partituras generales (Full Score) y partichelas con los más altos estándares de legibilidad."
+            }
+          ]
+        }
+      ],
+      "cierreTitulo": "Dale vida a tu próximo proyecto musical",
+      "cierre": "No importa si necesitas una canción íntima o una producción sinfónica monumental: hablemos y hagamos realidad tu obra."
+    },
+    "ctaLabel": "Cotiza tu encargo aquí",
     "icon": "composicion",
     "image": "/img/compositor3.jpg"
   },
   {
     "id": 2,
     "titleKey": "orquestaciones",
-    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor.",
+    "descripcion": "¿Eres un artista con trayectoria, una banda famosa o una productora buscando un show sinfónico inolvidable? Da el gran salto formal.",
+    "detalle": {
+      "gancho": "¿Eres un artista con trayectoria, una banda famosa o una productora buscando un show sinfónico inolvidable? Da el gran salto formal.",
+      "intro": "Eleva tu música al formato monumental: tu repertorio, ahora sinfónico. Orquestaciones profesionales para solistas y agrupaciones populares consagradas. Pongo a tu disposición más de 30 años de experiencia internacional como director de orquesta (formado en el Real Conservatorio de Bruselas) para transformar tus canciones y éxitos populares en verdaderas piezas de arte sinfónico.",
+      "secciones": [
+        {
+          "titulo": "Servicios Especializados de Crossover Sinfónico",
+          "items": [
+            {
+              "titulo": "Orquestación de Éxitos Populares",
+              "texto": "Transformo las canciones de bandas y solistas famosos en partituras monumentales para Orquesta Sinfónica completa o Ensambles de Cámara."
+            },
+            {
+              "titulo": "Shows de Crossover y Tributos",
+              "texto": "Creación de repertorios completos para espectáculos que fusionan el rock, el pop, el folclor o la balada con la majestuosidad de una orquesta."
+            },
+            {
+              "titulo": "Arreglos para Solista y Orquesta",
+              "texto": "Marcos orquestales a la medida que respetan tu identidad artística, potencian tu voz o instrumento solista y deslumbran al público."
+            },
+            {
+              "titulo": "Adaptaciones Flexibles",
+              "texto": "Diseñadas para sonar perfectas tanto en grandes orquestas filarmónicas como en agrupaciones híbridas (banda base + cuerdas)."
+            }
+          ]
+        },
+        {
+          "titulo": "La ventaja de un Director de Orquesta en el papel",
+          "intro": "Como actual director de la Orquesta y Coro Sinfónico de la UCT y director lírico en Santiago para Merlín Comunicaciones (con la Orquesta Filodramática de Chile), sé exactamente cómo lograr que una sección de cuerdas, bronces y maderas dialogue a la perfección con una batería o una guitarra eléctrica.",
+          "items": [
+            {
+              "titulo": "Sin sorpresas en el ensayo",
+              "texto": "Partituras efectivas que optimizan el tiempo de ensayo de la orquesta."
+            },
+            {
+              "titulo": "Balance acústico real",
+              "texto": "Cuidado absoluto en las frecuencias para que los instrumentos populares y la orquesta nunca compitan por el protagonismo."
+            },
+            {
+              "titulo": "Calidad editorial premium",
+              "texto": "Entrega de Score General y partichelas listas con estándares internacionales de legibilidad."
+            }
+          ]
+        }
+      ],
+      "cierreTitulo": "Lleva tu música a los grandes teatros",
+      "cierre": "Dale a tus fanáticos la experiencia de escuchar tus canciones con el poder de una orquesta sinfónica. Consolida tu legado musical hoy. Escríbeme y diseñemos tu proyecto sinfónico."
+    },
+    "ctaLabel": "Escríbeme y diseñemos tu proyecto sinfónico",
     "icon": "arreglos",
     "image": "/img/orquesta.jpg"
   },
   {
     "id": 3,
     "titleKey": "arreglosCorales",
-    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor.",
+    "descripcion": "¿Buscas un repertorio que desafíe a tus cantantes, emocione a tu audiencia y suene con un balance perfecto desde el primer ensayo?",
+    "detalle": {
+      "gancho": "¿Buscas un repertorio que desafíe a tus cantantes, emocione a tu audiencia y suene con un balance perfecto desde el primer ensayo?",
+      "intro": "Voces que trascienden: arreglos corales profesionales para todo tipo de elencos. Música a la medida de tu coro, escrita por un director de trayectoria internacional. Pongo mis más de 30 años de experiencia como director coral y orquestal (formado en el Real Conservatorio de Bruselas) a tu disposición para crear arreglos únicos que se adapten exactamente a las capacidades y estilo de tu agrupación.",
+      "secciones": [
+        {
+          "titulo": "Soluciones Corales para Todo Tipo de Música",
+          "items": [
+            {
+              "titulo": "Crossover y Música Popular",
+              "texto": "Versiones corales de alta gama para pop, rock, folclor chileno y latinoamericano, jazz y baladas."
+            },
+            {
+              "titulo": "Música Docta y Sacra",
+              "texto": "Composiciones originales y adaptaciones de repertorio clásico o litúrgico con rigurosidad académica."
+            },
+            {
+              "titulo": "Grandes Obras Sinfónico-Corales",
+              "texto": "Reducciones orquestales, adaptaciones o arreglos masivos listos para dialogar con orquesta."
+            }
+          ]
+        },
+        {
+          "titulo": "Adaptado a Cualquier Combinación Vocal",
+          "intro": "No importa la estructura de tu elenco, diseño la partitura para optimizar su rendimiento acústico y comodidad vocal:",
+          "items": [
+            {
+              "titulo": "Coro Mixto",
+              "texto": "Formato tradicional (SATB) y divisiones complejas (SSAATTBB)."
+            },
+            {
+              "titulo": "Voces Iguales",
+              "texto": "Coros Femeninos (SSA/SSAA) o Coros Masculinos (TTBB)."
+            },
+            {
+              "titulo": "Formatos Juveniles, Infantiles o Escolares",
+              "texto": "SA/SAB, cuidando la tesitura y el rango adecuado para voces en desarrollo."
+            },
+            {
+              "titulo": "Ensambles Vocales Íntimos",
+              "texto": "Cuartetos y quintetos a cappella."
+            }
+          ]
+        },
+        {
+          "titulo": "La firma de un Director de Coro en cada partitura",
+          "intro": "Como fundador y director titular del Coro Sinfónico de la Universidad Católica de Temuco y con un extenso historial liderando elencos en Europa y Chile (como el Coro de la Universidad de Concepción), entiendo las problemáticas reales del canto coral:",
+          "items": [
+            {
+              "titulo": "Conducción de voces orgánica",
+              "texto": "Líneas melódicas fluidas y lógicas que facilitan la afinación y memorización."
+            },
+            {
+              "titulo": "Cuidado de la tesitura",
+              "texto": "Arreglos escritos respetando las zonas cómodas de cada cuerda para evitar la fatiga vocal."
+            },
+            {
+              "titulo": "Legibilidad Editorial Premium",
+              "texto": "Partituras claras, limpias y listas con estándares internacionales para optimizar tus tiempos de ensayo."
+            }
+          ]
+        }
+      ],
+      "cierreTitulo": "Haz cantar a tu elenco con un repertorio único",
+      "cierre": "Dale a tu coro la oportunidad de brillar con arreglos profesionales hechos a la medida. Conversemos y diseñemos tu próxima temporada coral."
+    },
+    "ctaLabel": "Cotiza tu arreglo o composición coral aquí",
     "icon": "direccion",
     "image": "/img/coro.jpg"
   },
   {
     "id": 4,
     "titleKey": "transcripcionPartituras",
-    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor.",
+    "descripcion": "¿Tienes una melodía grabada en tu teléfono? ¿Un manuscrito antiguo que tus músicos no logran leer? ¿Un archivo de audio del que necesitas la partitura exacta?",
+    "detalle": {
+      "gancho": "¿Tienes una melodía grabada en tu teléfono? ¿Un manuscrito antiguo que tus músicos no logran leer? ¿Un archivo de audio del que necesitas la partitura exacta?",
+      "intro": "De tu mente, audio o manuscrito… directo al papel profesional. Servicio de transcripción y edición musical en cualquier formato. Pongo a tu disposición mis más de 30 años de experiencia como director internacional y arreglista (formado en el Real Conservatorio de Bruselas) para transcribir y digitalizar tu música con absoluta precisión técnica y fidelidad artística.",
+      "secciones": [
+        {
+          "titulo": "Transcribo cualquier música a cualquier formato",
+          "items": [
+            {
+              "titulo": "De Audio a Partitura",
+              "texto": "Transcribo canciones, maquetas, grabaciones en vivo, solos instrumentales o piezas complejas desde cualquier archivo de audio (MP3, WAV, videos) directamente al papel."
+            },
+            {
+              "titulo": "De Manuscrito a Edición Digital",
+              "texto": "Modernizo tus partituras hechas a mano o borradores antiguos, convirtiéndolos en archivos digitales limpios, profesionales y libres de errores."
+            },
+            {
+              "titulo": "Reducciones y Adaptaciones",
+              "texto": "Transformo partituras orquestales complejas a formato de Piano Solo, Canto y Piano, o sistemas condensados para ensayo."
+            },
+            {
+              "titulo": "De Formato Popular a Docto (y viceversa)",
+              "texto": "Transcripción de cifrados americanos, tablaturas o guías informales a notación tradicional para músicos académicos."
+            }
+          ]
+        },
+        {
+          "titulo": "Precisión de Director: Calidad Editorial Internacional",
+          "intro": "Como director titular de la Orquesta y Coro Sinfónico de la UCT, sé lo frustrante que es ensayar con una partitura mal editada. Mis transcripciones garantizan:",
+          "items": [
+            {
+              "titulo": "Cero errores de lectura",
+              "texto": "Revisión exhaustiva de armonía, ritmo, dinámicas y articulaciones."
+            },
+            {
+              "titulo": "Legibilidad premium",
+              "texto": "Diseño visual impecable de páginas y partichelas (estándar Sibelius/Finale) para optimizar el tiempo de tus músicos."
+            },
+            {
+              "titulo": "Formatos listos para usar",
+              "texto": "Entrega en PDF de alta resolución, archivos editables (XML / Sibelius) y maquetas de audio de referencia (MIDI / MP3)."
+            }
+          ]
+        }
+      ],
+      "cierreTitulo": "No dejes que tu música se pierda. Digitalízala hoy",
+      "cierre": "Protege tus creaciones, formaliza tu catálogo o prepara tu material para el registro de propiedad intelectual. Hablemos y profesionalicemos tus partituras."
+    },
+    "ctaLabel": "Envía tu audio o manuscrito y cotiza aquí",
     "icon": "consultoria",
     "image": "/img/partitura.jpg"
   }
