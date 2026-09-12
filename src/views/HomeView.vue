@@ -21,13 +21,21 @@
       </div>
       <div class="hero-texto text-center text-lg-start">
         <h1 class="hero-titulo mb-3">
-          <span class="hero-titulo__nombre">Eduardo Gajardo Schmidlin</span>
-          <span class="hero-titulo__rol">{{ t('hero.role') }}</span>
-        </h1>
-        <p class="hero-subtitulo mb-0">
-          <span class="hero-subtitulo__lineas">{{ t('hero.disciplines') }}</span>
+          <span class="hero-titulo__lineas">{{ t('hero.disciplines') }}</span>
           <span class="hero-cita">{{ t('hero.quote') }}</span>
+        </h1>
+        <p class="hero-subtitulo mb-3 mb-md-4">
+          <span class="hero-subtitulo__nombre">Eduardo Gajardo Schmidlin</span>
+          <span class="hero-subtitulo__rol">{{ t('hero.role') }}</span>
         </p>
+        <a
+          class="hero-cta"
+          :href="heroWhatsappHref"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span class="hero-cta__label">{{ t('hero.cta') }}</span>
+        </a>
       </div>
     </div>
     <SectionScrollUp />
@@ -123,82 +131,59 @@
     </div>
   </section>
 
-  <!-- Productos Sinfónicos -->
-  <section id="productos-sinfonicos" class="home-section home-section--slate pt-4 pt-md-5 pb-2 pb-md-3">
-    <div class="container text-center">
-      <h2 class="section-title mb-4">{{ t('nav.productosSinfonicos') }}</h2>
-    </div>
-    <ProductCarousel
-      :items="productosSinfonicos"
-      aria-label="productos sinfónicos"
-    />
-    <SectionScrollUp />
-  </section>
-
-  <!-- Música de Películas -->
-  <section id="musica-peliculas" class="home-section home-section--ink pt-4 pt-md-5 pb-2 pb-md-3">
-    <div class="container text-center">
-      <h2 class="section-title mb-4">{{ t('nav.musicaPeliculas') }}</h2>
-    </div>
-    <ProductCarousel
-      :items="musicaPeliculas"
-      aria-label="música de películas"
-      compact
-    />
-    <SectionScrollUp />
-  </section>
-
   <!-- Servicios -->
   <section id="servicios" class="home-section home-section--slate py-4 py-md-5">
     <div class="container">
       <h2 class="section-title mb-4 mb-md-5">{{ t('nav.servicios') }}</h2>
-      <div class="row g-3 g-md-4 justify-content-center">
-        <div
-          v-for="servicio in servicios"
-          :key="servicio.id"
-          class="col-12 col-sm-6 col-lg-3"
-        >
-          <article class="servicio-card h-100 d-flex flex-column">
-            <div v-if="!servicio.image" class="servicio-card__icon" aria-hidden="true">
-              <svg v-if="servicio.icon === 'composicion'" xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" viewBox="0 0 16 16">
-                <path d="M9 13c0 .552-.448 1-1 1s-1-.448-1-1V5c0-.552.448-1 1-1s1 .448 1 1z"/>
-                <path d="M6 12.036V13c0 .552-.448 1-1 1s-1-.448-1-1v-.964c-.725-.35-1.22-.998-1.22-1.752 0-.754.495-1.402 1.22-1.752V7c0-.552.448-1 1-1s1 .448 1 1v1.536c.725.35 1.22.998 1.22 1.752 0 .754-.495 1.402-1.22 1.752"/>
-              </svg>
-              <svg v-else-if="servicio.icon === 'arreglos'" xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" viewBox="0 0 16 16">
-                <path d="M4 0h5.293A1 1 0 0 1 10 .293L13.707 4a1 1 0 0 1 .293.707V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2m5.5 1.5v2a1 1 0 0 0 1 1h2z"/>
-                <path d="M4.603 12.087a.5.5 0 0 1-.707-.707L10.793 4.5a.5.5 0 1 1 .707.707z"/>
-              </svg>
-              <svg v-else-if="servicio.icon === 'direccion'" xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" viewBox="0 0 16 16">
-                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                <path d="M6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814z"/>
-              </svg>
-              <svg v-else xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" viewBox="0 0 16 16">
-                <path d="M8 3a5 5 0 0 0-5 5v1a1 1 0 0 1-2 0V8a7 7 0 1 1 14 0v1a1 1 0 0 1-2 0V8a5 5 0 0 0-5-5"/>
-                <path d="M5 10a3 3 0 1 1 6 0v3a3 3 0 1 1-6 0z"/>
-              </svg>
-            </div>
-            <h3 class="servicio-card__titulo">{{ t(`services.${servicio.titleKey}`) }}</h3>
-            <p class="servicio-card__descripcion">{{ servicio.descripcion }}</p>
-            <div v-if="servicio.image" class="servicio-card__media">
-              <img
-                :src="servicio.image"
-                :alt="t(`services.${servicio.titleKey}`)"
-                class="servicio-card__img"
-                loading="lazy"
-              >
-            </div>
-            <div v-if="servicio.detalle" class="servicio-card__actions mt-auto">
-              <button
-                type="button"
-                class="btn btn-link servicio-card__mas"
-                @click="openServicioDetalle(servicio)"
-              >
-                Ver más
-              </button>
-            </div>
-          </article>
-        </div>
-      </div>
+    </div>
+    <ProductCarousel
+      :items="servicios"
+      aria-label="servicios"
+      compact
+    >
+      <template #default="{ item: servicio }">
+        <article class="servicio-card h-100 d-flex flex-column">
+          <div v-if="!servicio.image" class="servicio-card__icon" aria-hidden="true">
+            <svg v-if="servicio.icon === 'composicion'" xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M9 13c0 .552-.448 1-1 1s-1-.448-1-1V5c0-.552.448-1 1-1s1 .448 1 1z"/>
+              <path d="M6 12.036V13c0 .552-.448 1-1 1s-1-.448-1-1v-.964c-.725-.35-1.22-.998-1.22-1.752 0-.754.495-1.402 1.22-1.752V7c0-.552.448-1 1-1s1 .448 1 1v1.536c.725.35 1.22.998 1.22 1.752 0 .754-.495 1.402-1.22 1.752"/>
+            </svg>
+            <svg v-else-if="servicio.icon === 'arreglos'" xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M4 0h5.293A1 1 0 0 1 10 .293L13.707 4a1 1 0 0 1 .293.707V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2m5.5 1.5v2a1 1 0 0 0 1 1h2z"/>
+              <path d="M4.603 12.087a.5.5 0 0 1-.707-.707L10.793 4.5a.5.5 0 1 1 .707.707z"/>
+            </svg>
+            <svg v-else-if="servicio.icon === 'direccion'" xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+              <path d="M6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814z"/>
+            </svg>
+            <svg v-else xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M8 3a5 5 0 0 0-5 5v1a1 1 0 0 1-2 0V8a7 7 0 1 1 14 0v1a1 1 0 0 1-2 0V8a5 5 0 0 0-5-5"/>
+              <path d="M5 10a3 3 0 1 1 6 0v3a3 3 0 1 1-6 0z"/>
+            </svg>
+          </div>
+          <h3 class="servicio-card__titulo">{{ t(`services.${servicio.titleKey}`) }}</h3>
+          <p class="servicio-card__descripcion">{{ servicio.descripcion }}</p>
+          <div v-if="servicio.image" class="servicio-card__media">
+            <img
+              :src="servicio.image"
+              :alt="t(`services.${servicio.titleKey}`)"
+              class="servicio-card__img"
+              loading="lazy"
+            >
+          </div>
+          <div v-if="servicio.detalle" class="servicio-card__actions mt-auto">
+            <button
+              type="button"
+              class="btn btn-link servicio-card__mas"
+              @click="openServicioDetalle(servicio)"
+            >
+              Ver más
+            </button>
+          </div>
+        </article>
+      </template>
+    </ProductCarousel>
+    <div class="container">
       <SectionScrollUp />
     </div>
   </section>
@@ -211,6 +196,41 @@
     :cotiza-href="servicioModalActivo ? cotizaMailto(t(`services.${servicioModalActivo.titleKey}`)) : '#'"
     @close="closeServicioDetalle"
   />
+
+  <!-- Productos Sinfónicos -->
+  <section id="productos-sinfonicos" class="home-section home-section--ink pt-4 pt-md-5 pb-2 pb-md-3">
+    <div class="container text-center">
+      <h2 class="section-title mb-4">{{ t('nav.productosSinfonicos') }}</h2>
+      <div class="productos-grid">
+        <CardComponent
+          v-for="proyecto in productosSinfonicos"
+          :key="proyecto.id"
+          :product-id="proyecto.id"
+          :title="proyecto.title"
+          :subtitle="proyecto.subtitle || ''"
+          :image="proyecto.image"
+          :opciones="proyecto.opciones"
+          :temas="proyecto.temas || []"
+          :agotado="Boolean(proyecto.agotado)"
+          :image-position="proyecto.imagePosition || ''"
+        />
+      </div>
+    </div>
+    <SectionScrollUp />
+  </section>
+
+  <!-- Música de Películas -->
+  <section id="musica-peliculas" class="home-section home-section--slate pt-4 pt-md-5 pb-2 pb-md-3">
+    <div class="container text-center">
+      <h2 class="section-title mb-4">{{ t('nav.musicaPeliculas') }}</h2>
+    </div>
+    <ProductCarousel
+      :items="musicaPeliculas"
+      aria-label="música de películas / musicales"
+      compact
+    />
+    <SectionScrollUp />
+  </section>
 
   <!-- Testimonios (placeholder) -->
   <section id="testimonios" class="home-section home-section--ink py-4 py-md-5">
@@ -231,14 +251,17 @@ import { onMounted, onUnmounted, ref } from 'vue'
 import NavBar from '../components/NavBar'
 import FooterComponent from '../components/FooterComponent.vue'
 import ProductCarousel from '../components/ProductCarousel.vue'
+import CardComponent from '../components/CardComponent.vue'
 import SectionScrollUp from '../components/SectionScrollUp.vue'
 import ServiceDetailModal from '../components/ServiceDetailModal.vue'
 import productosSinfonicos from '../data/productosSinfonicos.json'
 import musicaPeliculas from '../data/musicaPeliculas.json'
 import servicios from '../data/servicios.json'
 import { useI18n } from '@/i18n/useI18n'
+import { getWhatsAppHeroUrl } from '@/config/whatsapp'
 
 const { t } = useI18n()
+const heroWhatsappHref = getWhatsAppHeroUrl()
 
 /** Correo provisional para cotizaciones de servicios */
 const SERVICIOS_EMAIL = 'paulagajardosch@gmail.com'
@@ -793,9 +816,14 @@ onUnmounted(() => {
 }
 
 @media (min-width: 992px) {
+  .hero-texto {
+    flex: 1 1 0;
+    max-width: min(100%, 42rem);
+  }
+
   .hero-foto-shell {
     /* Tablet landscape / desktop estrecho: foto más contenida */
-    --foto-ancho: min(40%, 17.5rem);
+    --foto-ancho: min(36%, 16rem);
     margin-inline: 0;
     flex: 0 1 auto;
   }
@@ -803,7 +831,7 @@ onUnmounted(() => {
 
 @media (min-width: 1200px) {
   .hero-foto-shell {
-    --foto-ancho: min(42%, 26rem);
+    --foto-ancho: min(38%, 22rem);
   }
 }
 
@@ -827,12 +855,14 @@ onUnmounted(() => {
   flex: 0 1 auto;
   min-width: 0;
   max-width: 100%;
+  position: relative;
+  z-index: 1;
 }
 
 @media (min-width: 992px) {
   .hero-texto {
     flex: 1 1 0;
-    max-width: min(100%, 36rem);
+    max-width: min(100%, 38rem);
   }
 }
 
@@ -844,37 +874,11 @@ onUnmounted(() => {
   color: var(--ms-text);
 }
 
-.hero-titulo__nombre,
-.hero-titulo__rol {
+.hero-titulo__lineas {
   display: block;
-  white-space: normal;
-}
-
-@media (min-width: 1200px) {
-  .hero-titulo__nombre,
-  .hero-titulo__rol {
-    white-space: nowrap;
-  }
-}
-
-.hero-titulo__nombre {
-  font-size: clamp(0.78rem, 4.2vw, 1.5rem);
-}
-
-.hero-titulo__rol {
-  font-size: clamp(0.68rem, 3.5vw, 1.28rem);
-}
-
-.hero-subtitulo {
-  font-family: var(--font-body);
-  line-height: 1.55;
-  color: var(--ms-text-muted);
-}
-
-.hero-subtitulo__lineas {
-  display: block;
-  white-space: normal;
-  font-size: clamp(0.62rem, 3vw, 1rem);
+  white-space: nowrap;
+  font-size: clamp(0.48rem, 2.55vw, 1.05rem);
+  letter-spacing: 0.015em;
 }
 
 .hero-cita {
@@ -884,12 +888,98 @@ onUnmounted(() => {
   color: var(--ms-accent-on-dark);
   font-weight: 600;
   white-space: normal;
-  font-size: clamp(0.62rem, 3vw, 1rem);
+  overflow-wrap: anywhere;
+  font-size: clamp(0.68rem, 3.2vw, 1.05rem);
+}
+
+.hero-subtitulo {
+  font-family: var(--font-body);
+  line-height: 1.55;
+  color: var(--ms-text-muted);
+}
+
+.hero-subtitulo__nombre,
+.hero-subtitulo__rol {
+  display: block;
+  white-space: normal;
+}
+
+.hero-subtitulo__nombre {
+  font-size: clamp(0.58rem, 2.7vw, 0.92rem);
+}
+
+.hero-subtitulo__rol {
+  font-size: clamp(0.54rem, 2.4vw, 0.82rem);
+}
+
+.hero-cta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.15rem;
+  padding: 0.72rem 1.85rem 0.78rem;
+  border: 1px solid rgba(var(--ms-accent-rgb), 0.55);
+  border-radius: 999px;
+  background: linear-gradient(
+    165deg,
+    rgba(var(--ms-accent-rgb), 0.18) 0%,
+    rgba(var(--ms-accent-rgb), 0.05) 100%
+  );
+  color: var(--ms-accent-on-dark);
+  text-decoration: none;
+  transition:
+    color 0.28s ease,
+    background-color 0.28s ease,
+    border-color 0.28s ease,
+    box-shadow 0.28s ease,
+    transform 0.22s ease;
+}
+
+.hero-cta__label {
+  font-family: var(--font-display);
+  font-size: clamp(0.72rem, 1.8vw, 0.88rem);
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.hero-cta:hover,
+.hero-cta:focus-visible {
+  color: #fff;
+  background: rgba(var(--ms-accent-rgb), 0.32);
+  border-color: rgba(var(--ms-accent-rgb), 0.95);
+  box-shadow:
+    0 0 0 1px rgba(var(--ms-accent-rgb), 0.28),
+    0 10px 28px rgba(0, 0, 0, 0.28);
+  transform: translateY(-2px);
+}
+
+.hero-cta:focus-visible {
+  outline: 2px solid rgba(var(--ms-accent-rgb), 0.55);
+  outline-offset: 3px;
+}
+
+.hero-cta:active {
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-cta {
+    transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .hero-cta:hover,
+  .hero-cta:focus-visible,
+  .hero-cta:active {
+    transform: none;
+  }
 }
 
 @media (min-width: 1200px) {
-  .hero-subtitulo__lineas,
-  .hero-cita {
+  .hero-subtitulo__nombre,
+  .hero-subtitulo__rol {
     white-space: nowrap;
   }
 }
@@ -1017,6 +1107,23 @@ onUnmounted(() => {
   aspect-ratio: 4 / 3;
   object-fit: cover;
   border-radius: 0.2rem;
+}
+
+.productos-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  max-width: 22rem;
+  margin: 0 auto;
+  text-align: left;
+}
+
+@media (min-width: 768px) {
+  .productos-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 42rem;
+    gap: 1.5rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

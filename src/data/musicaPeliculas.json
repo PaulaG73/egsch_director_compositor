@@ -10,22 +10,31 @@
         "id": "angelito-full-score-orquesta",
         "nombre": "Full Score Orquesta",
         "descripcion": "Partitura completa para director y orquesta sinfónica.",
-        "price": "$XX.XXX"
-      }
-    ]
-  },
-  {
-    "id": "2",
-    "title": "Superman",
-    "subtitle": "Main Theme",
-    "image": "/img/Superman.jpg",
-    "imagePosition": "center top",
-    "opciones": [
+        "price": "US$ 60",
+        "priceCompleto": "US$ XX",
+        "priceTema": "US$ 60",
+        "precioCompletoUsd": null,
+        "precioTemaUsd": 60
+      },
       {
-        "id": "superman-full-score-orquesta",
-        "nombre": "Full Score Orquesta",
-        "descripcion": "Partitura completa para director y orquesta sinfónica.",
-        "price": "$XX.XXX"
+        "id": "angelito-score-coro",
+        "nombre": "Score Coro",
+        "descripcion": "Partitura coral para ensayo y presentación.",
+        "price": "US$ 40",
+        "priceCompleto": "US$ XX",
+        "priceTema": "US$ 40",
+        "precioCompletoUsd": null,
+        "precioTemaUsd": 40
+      },
+      {
+        "id": "angelito-partes-individuales",
+        "nombre": "Partituras de orquesta (set completo)",
+        "descripcion": "Incluye todas las partichelas del elenco. No se vende cada instrumento por separado.",
+        "price": "US$ 90",
+        "priceCompleto": "US$ XX",
+        "priceTema": "US$ 90",
+        "precioCompletoUsd": null,
+        "precioTemaUsd": 90
       }
     ]
   },
@@ -39,7 +48,31 @@
         "id": "frozen-full-score-orquesta",
         "nombre": "Full Score Orquesta",
         "descripcion": "Partitura completa para director y orquesta sinfónica.",
-        "price": "$XX.XXX"
+        "price": "US$ 60",
+        "priceCompleto": "US$ XX",
+        "priceTema": "US$ 60",
+        "precioCompletoUsd": null,
+        "precioTemaUsd": 60
+      },
+      {
+        "id": "frozen-score-coro",
+        "nombre": "Score Coro",
+        "descripcion": "Partitura coral para ensayo y presentación.",
+        "price": "US$ 20",
+        "priceCompleto": "US$ XX",
+        "priceTema": "US$ 20",
+        "precioCompletoUsd": null,
+        "precioTemaUsd": 20
+      },
+      {
+        "id": "frozen-partes-individuales",
+        "nombre": "Partituras de orquesta (set completo)",
+        "descripcion": "Incluye todas las partichelas del elenco. No se vende cada instrumento por separado.",
+        "price": "US$ 90",
+        "priceCompleto": "US$ XX",
+        "priceTema": "US$ 90",
+        "precioCompletoUsd": null,
+        "precioTemaUsd": 90
       }
     ]
   },
@@ -53,8 +86,233 @@
         "id": "reyleon-full-score-orquesta",
         "nombre": "Full Score Orquesta",
         "descripcion": "Partitura completa para director y orquesta sinfónica.",
-        "price": "$XX.XXX"
+        "price": "US$ 50",
+        "priceCompleto": "US$ XX",
+        "priceTema": "US$ 50",
+        "precioCompletoUsd": null,
+        "precioTemaUsd": 50
+      },
+      {
+        "id": "reyleon-score-coro",
+        "nombre": "Score Coro",
+        "descripcion": "Partitura coral para ensayo y presentación.",
+        "price": "US$ 20",
+        "priceCompleto": "US$ XX",
+        "priceTema": "US$ 20",
+        "precioCompletoUsd": null,
+        "precioTemaUsd": 20
+      },
+      {
+        "id": "reyleon-partes-individuales",
+        "nombre": "Partituras de orquesta (set completo)",
+        "descripcion": "Incluye todas las partichelas del elenco. No se vende cada instrumento por separado.",
+        "price": "US$ 75",
+        "priceCompleto": "US$ XX",
+        "priceTema": "US$ 75",
+        "precioCompletoUsd": null,
+        "precioTemaUsd": 75
       }
     ]
+  },
+  {
+    "id": "5",
+    "title": "Spiderman",
+    "subtitle": "Main Theme",
+    "image": "/img/spiderman.jpg",
+    "opciones": [
+      {
+        "id": "spiderman-full-score-orquesta",
+        "nombre": "Full Score Orquesta",
+        "descripcion": "Partitura completa para director y orquesta sinfónica.",
+        "price": "US$ 60",
+        "priceCompleto": "US$ XX",
+        "priceTema": "US$ 60",
+        "precioCompletoUsd": null,
+        "precioTemaUsd": 60
+      },
+      {
+        "id": "spiderman-score-coro",
+        "nombre": "Score Coro",
+        "descripcion": "Partitura coral para ensayo y presentación.",
+        "price": "US$ 30",
+        "priceCompleto": "US$ XX",
+        "priceTema": "US$ 30",
+        "precioCompletoUsd": null,
+        "precioTemaUsd": 30
+      },
+      {
+        "id": "spiderman-partes-individuales",
+        "nombre": "Partituras de orquesta (set completo)",
+        "descripcion": "Incluye todas las partichelas del elenco. No se vende cada instrumento por separado.",
+        "price": "US$ 90",
+        "priceCompleto": "US$ XX",
+        "priceTema": "US$ 90",
+        "precioCompletoUsd": null,
+        "precioTemaUsd": 90
+      }
+    ]
+  },
+  {
+    "id": "6",
+    "title": "The Avengers",
+    "subtitle": "Main Theme",
+    "image": "/img/avengers.jpg",
+    "opciones": [
+      {
+        "id": "avengers-full-score-orquesta",
+        "nombre": "Full Score Orquesta",
+        "descripcion": "Partitura completa para director y orquesta sinfónica.",
+        "price": "US$ 60",
+        "priceCompleto": "US$ XX",
+        "priceTema": "US$ 60",
+        "precioCompletoUsd": null,
+        "precioTemaUsd": 60
+      },
+      {
+        "id": "avengers-score-coro",
+        "nombre": "Score Coro",
+        "descripcion": "Partitura coral para ensayo y presentación.",
+        "price": "US$ 30",
+        "priceCompleto": "US$ XX",
+        "priceTema": "US$ 30",
+        "precioCompletoUsd": null,
+        "precioTemaUsd": 30
+      },
+      {
+        "id": "avengers-partes-individuales",
+        "nombre": "Partituras de orquesta (set completo)",
+        "descripcion": "Incluye todas las partichelas del elenco. No se vende cada instrumento por separado.",
+        "price": "US$ 90",
+        "priceCompleto": "US$ XX",
+        "priceTema": "US$ 90",
+        "precioCompletoUsd": null,
+        "precioTemaUsd": 90
+      }
+    ]
+  },
+  {
+    "id": "7",
+    "title": "Jurassic Park",
+    "subtitle": "Main Theme",
+    "image": "/img/jurassik_park.jpg",
+    "opciones": [
+      {
+        "id": "jurassic-full-score-orquesta",
+        "nombre": "Full Score Orquesta",
+        "descripcion": "Partitura completa para director y orquesta sinfónica.",
+        "price": "US$ 60",
+        "priceCompleto": "US$ XX",
+        "priceTema": "US$ 60",
+        "precioCompletoUsd": null,
+        "precioTemaUsd": 60
+      },
+      {
+        "id": "jurassic-partes-individuales",
+        "nombre": "Partituras de orquesta (set completo)",
+        "descripcion": "Incluye todas las partichelas del elenco. No se vende cada instrumento por separado.",
+        "price": "US$ 90",
+        "priceCompleto": "US$ XX",
+        "priceTema": "US$ 90",
+        "precioCompletoUsd": null,
+        "precioTemaUsd": 90
+      }
+    ],
+    "sinCoro": true
+  },
+  {
+    "id": "8",
+    "title": "El Mago de Oz",
+    "subtitle": "Over the Rainbow",
+    "image": "/img/mago_de_oz.jpg",
+    "opciones": [
+      {
+        "id": "mago-oz-full-score-orquesta",
+        "nombre": "Full Score Orquesta",
+        "descripcion": "Partitura completa para director y orquesta sinfónica.",
+        "price": "US$ 60",
+        "priceCompleto": "US$ XX",
+        "priceTema": "US$ 60",
+        "precioCompletoUsd": null,
+        "precioTemaUsd": 60
+      },
+      {
+        "id": "mago-oz-score-coro",
+        "nombre": "Score Coro",
+        "descripcion": "Partitura coral para ensayo y presentación.",
+        "price": "US$ 40",
+        "priceCompleto": "US$ XX",
+        "priceTema": "US$ 40",
+        "precioCompletoUsd": null,
+        "precioTemaUsd": 40
+      },
+      {
+        "id": "mago-oz-partes-individuales",
+        "nombre": "Partituras de orquesta (set completo)",
+        "descripcion": "Incluye todas las partichelas del elenco. No se vende cada instrumento por separado.",
+        "price": "US$ 90",
+        "priceCompleto": "US$ XX",
+        "priceTema": "US$ 90",
+        "precioCompletoUsd": null,
+        "precioTemaUsd": 90
+      }
+    ]
+  },
+  {
+    "id": "9",
+    "title": "Obertura (Medley)",
+    "subtitle": "",
+    "image": "/img/partitura.jpg",
+    "opciones": [
+      {
+        "id": "obertura-medley-full-score-orquesta",
+        "nombre": "Full Score Orquesta",
+        "descripcion": "Partitura completa para director y orquesta sinfónica.",
+        "price": "US$ 80",
+        "priceCompleto": "US$ XX",
+        "priceTema": "US$ 80",
+        "precioCompletoUsd": null,
+        "precioTemaUsd": 80
+      },
+      {
+        "id": "obertura-medley-partes-individuales",
+        "nombre": "Partituras de orquesta (set completo)",
+        "descripcion": "Incluye todas las partichelas del elenco. No se vende cada instrumento por separado.",
+        "price": "US$ 120",
+        "priceCompleto": "US$ XX",
+        "priceTema": "US$ 120",
+        "precioCompletoUsd": null,
+        "precioTemaUsd": 120
+      }
+    ],
+    "sinCoro": true
+  },
+  {
+    "id": "10",
+    "title": "La Bella y la Bestia",
+    "subtitle": "Suite orquestal",
+    "image": "/img/partitura.jpg",
+    "opciones": [
+      {
+        "id": "bella-bestia-full-score-orquesta",
+        "nombre": "Full Score Orquesta",
+        "descripcion": "Partitura completa para director y orquesta sinfónica.",
+        "price": "US$ 50",
+        "priceCompleto": "US$ XX",
+        "priceTema": "US$ 50",
+        "precioCompletoUsd": null,
+        "precioTemaUsd": 50
+      },
+      {
+        "id": "bella-bestia-partes-individuales",
+        "nombre": "Partituras de orquesta (set completo)",
+        "descripcion": "Incluye todas las partichelas del elenco. No se vende cada instrumento por separado.",
+        "price": "US$ 75",
+        "priceCompleto": "US$ XX",
+        "priceTema": "US$ 75",
+        "precioCompletoUsd": null,
+        "precioTemaUsd": 75
+      }
+    ],
+    "sinCoro": true
   }
 ]

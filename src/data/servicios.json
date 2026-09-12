@@ -113,6 +113,61 @@
     "image": "/img/orquesta.jpg"
   },
   {
+    "id": 4,
+    "titleKey": "transcripcionPartituras",
+    "descripcion": "¿Tienes una melodía grabada en tu teléfono? ¿Un manuscrito antiguo que tus músicos no logran leer? ¿Un archivo de audio del que necesitas la partitura exacta?",
+    "detalle": {
+      "gancho": "¿Tienes una melodía grabada en tu teléfono? ¿Un manuscrito antiguo que tus músicos no logran leer? ¿Un archivo de audio del que necesitas la partitura exacta?",
+      "intro": "De tu mente, audio o manuscrito… directo al papel profesional. Servicio de transcripción y edición musical en cualquier formato. Pongo a tu disposición mis más de 30 años de experiencia como director internacional y arreglista (formado en el Real Conservatorio de Bruselas) para transcribir y digitalizar tu música con absoluta precisión técnica y fidelidad artística.",
+      "secciones": [
+        {
+          "titulo": "Transcribo cualquier música a cualquier formato",
+          "items": [
+            {
+              "titulo": "De Audio a Partitura",
+              "texto": "Transcribo canciones, maquetas, grabaciones en vivo, solos instrumentales o piezas complejas desde cualquier archivo de audio (MP3, WAV, videos) directamente al papel."
+            },
+            {
+              "titulo": "De Manuscrito a Edición Digital",
+              "texto": "Modernizo tus partituras hechas a mano o borradores antiguos, convirtiéndolos en archivos digitales limpios, profesionales y libres de errores."
+            },
+            {
+              "titulo": "Reducciones y Adaptaciones",
+              "texto": "Transformo partituras orquestales complejas a formato de Piano Solo, Canto y Piano, o sistemas condensados para ensayo."
+            },
+            {
+              "titulo": "De Formato Popular a Docto (y viceversa)",
+              "texto": "Transcripción de cifrados americanos, tablaturas o guías informales a notación tradicional para músicos académicos."
+            }
+          ]
+        },
+        {
+          "titulo": "Precisión de Director: Calidad Editorial Internacional",
+          "intro": "Como director titular de la Orquesta y Coro Sinfónico de la UCT, sé lo frustrante que es ensayar con una partitura mal editada. Mis transcripciones garantizan:",
+          "items": [
+            {
+              "titulo": "Cero errores de lectura",
+              "texto": "Revisión exhaustiva de armonía, ritmo, dinámicas y articulaciones."
+            },
+            {
+              "titulo": "Legibilidad premium",
+              "texto": "Diseño visual impecable de páginas y partichelas (estándar Sibelius/Finale) para optimizar el tiempo de tus músicos."
+            },
+            {
+              "titulo": "Formatos listos para usar",
+              "texto": "Entrega en PDF de alta resolución, archivos editables (XML / Sibelius) y maquetas de audio de referencia (MIDI / MP3)."
+            }
+          ]
+        }
+      ],
+      "cierreTitulo": "No dejes que tu música se pierda. Digitalízala hoy",
+      "cierre": "Protege tus creaciones, formaliza tu catálogo o prepara tu material para el registro de propiedad intelectual. Hablemos y profesionalicemos tus partituras."
+    },
+    "ctaLabel": "Envía tu audio o manuscrito y cotiza aquí",
+    "icon": "consultoria",
+    "image": "/img/partitura.jpg"
+  },
+  {
     "id": 3,
     "titleKey": "arreglosCorales",
     "descripcion": "¿Buscas un repertorio que desafíe a tus cantantes, emocione a tu audiencia y suene con un balance perfecto desde el primer ensayo?",
@@ -186,58 +241,28 @@
     "image": "/img/coro.jpg"
   },
   {
-    "id": 4,
-    "titleKey": "transcripcionPartituras",
-    "descripcion": "¿Tienes una melodía grabada en tu teléfono? ¿Un manuscrito antiguo que tus músicos no logran leer? ¿Un archivo de audio del que necesitas la partitura exacta?",
+    "id": 5,
+    "titleKey": "otrosArreglos",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "detalle": {
-      "gancho": "¿Tienes una melodía grabada en tu teléfono? ¿Un manuscrito antiguo que tus músicos no logran leer? ¿Un archivo de audio del que necesitas la partitura exacta?",
-      "intro": "De tu mente, audio o manuscrito… directo al papel profesional. Servicio de transcripción y edición musical en cualquier formato. Pongo a tu disposición mis más de 30 años de experiencia como director internacional y arreglista (formado en el Real Conservatorio de Bruselas) para transcribir y digitalizar tu música con absoluta precisión técnica y fidelidad artística.",
+      "gancho": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "intro": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
       "secciones": [
         {
-          "titulo": "Transcribo cualquier música a cualquier formato",
+          "titulo": "Contenido provisional",
           "items": [
             {
-              "titulo": "De Audio a Partitura",
-              "texto": "Transcribo canciones, maquetas, grabaciones en vivo, solos instrumentales o piezas complejas desde cualquier archivo de audio (MP3, WAV, videos) directamente al papel."
-            },
-            {
-              "titulo": "De Manuscrito a Edición Digital",
-              "texto": "Modernizo tus partituras hechas a mano o borradores antiguos, convirtiéndolos en archivos digitales limpios, profesionales y libres de errores."
-            },
-            {
-              "titulo": "Reducciones y Adaptaciones",
-              "texto": "Transformo partituras orquestales complejas a formato de Piano Solo, Canto y Piano, o sistemas condensados para ensayo."
-            },
-            {
-              "titulo": "De Formato Popular a Docto (y viceversa)",
-              "texto": "Transcripción de cifrados americanos, tablaturas o guías informales a notación tradicional para músicos académicos."
-            }
-          ]
-        },
-        {
-          "titulo": "Precisión de Director: Calidad Editorial Internacional",
-          "intro": "Como director titular de la Orquesta y Coro Sinfónico de la UCT, sé lo frustrante que es ensayar con una partitura mal editada. Mis transcripciones garantizan:",
-          "items": [
-            {
-              "titulo": "Cero errores de lectura",
-              "texto": "Revisión exhaustiva de armonía, ritmo, dinámicas y articulaciones."
-            },
-            {
-              "titulo": "Legibilidad premium",
-              "texto": "Diseño visual impecable de páginas y partichelas (estándar Sibelius/Finale) para optimizar el tiempo de tus músicos."
-            },
-            {
-              "titulo": "Formatos listos para usar",
-              "texto": "Entrega en PDF de alta resolución, archivos editables (XML / Sibelius) y maquetas de audio de referencia (MIDI / MP3)."
+              "titulo": "Placeholder",
+              "texto": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
             }
           ]
         }
       ],
-      "cierreTitulo": "No dejes que tu música se pierda. Digitalízala hoy",
-      "cierre": "Protege tus creaciones, formaliza tu catálogo o prepara tu material para el registro de propiedad intelectual. Hablemos y profesionalicemos tus partituras."
+      "cierreTitulo": "Próximamente",
+      "cierre": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium."
     },
-    "ctaLabel": "Envía tu audio o manuscrito y cotiza aquí",
-    "icon": "consultoria",
-    "image": "/img/partitura.jpg"
+    "ctaLabel": "Cotiza aquí",
+    "icon": "direccion",
+    "image": "/img/coro.jpg"
   }
 ]

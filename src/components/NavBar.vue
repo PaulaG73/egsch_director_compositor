@@ -2,7 +2,7 @@
   <div class="navBar">
     <nav id="navbar-principal" class="navbar navbar-expand-lg navbar-dark bg-maestro-profundo border-bottom py-2 py-md-3 nav-maestro">
       <div class="container-fluid px-3 px-lg-4 navbar-inner">
-        <div class="lang-switcher d-flex align-items-center gap-1">
+        <div class="lang-switcher d-flex align-items-center flex-wrap gap-1">
           <button
             v-for="lang in languages"
             :key="lang.code"
@@ -14,19 +14,47 @@
             @click="setLanguage(lang.code)"
           >
             <span class="lang-switcher__flag" aria-hidden="true">
+              <!-- Chile -->
               <svg v-if="lang.code === 'es'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 20">
-                <rect width="30" height="20" fill="#c60b1e"/>
-                <rect y="5" width="30" height="10" fill="#ffc400"/>
+                <rect width="30" height="10" fill="#fff"/>
+                <rect y="10" width="30" height="10" fill="#d52b1e"/>
+                <rect width="10" height="10" fill="#0039a6"/>
+                <polygon
+                  fill="#fff"
+                  points="5,1.6 5.85,4.2 8.6,4.2 6.4,5.85 7.2,8.5 5,6.85 2.8,8.5 3.6,5.85 1.4,4.2 4.15,4.2"
+                />
               </svg>
+              <!-- Reino Unido (simplificada) -->
               <svg v-else-if="lang.code === 'en'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 20">
-                <rect width="30" height="20" fill="#fff"/>
-                <rect x="13" width="4" height="20" fill="#ce1124"/>
-                <rect y="8" width="30" height="4" fill="#ce1124"/>
+                <rect width="30" height="20" fill="#012169"/>
+                <path d="M0,0 L30,20 M30,0 L0,20" stroke="#fff" stroke-width="4"/>
+                <path d="M0,0 L30,20 M30,0 L0,20" stroke="#c8102e" stroke-width="2"/>
+                <path d="M15,0 V20 M0,10 H30" stroke="#fff" stroke-width="6"/>
+                <path d="M15,0 V20 M0,10 H30" stroke="#c8102e" stroke-width="3.2"/>
               </svg>
-              <svg v-else xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 20">
+              <!-- Francia -->
+              <svg v-else-if="lang.code === 'fr'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 20">
                 <rect width="10" height="20" fill="#002395"/>
                 <rect x="10" width="10" height="20" fill="#fff"/>
                 <rect x="20" width="10" height="20" fill="#ed2939"/>
+              </svg>
+              <!-- Alemania -->
+              <svg v-else-if="lang.code === 'de'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 20">
+                <rect width="30" height="6.67" fill="#000"/>
+                <rect y="6.67" width="30" height="6.67" fill="#dd0000"/>
+                <rect y="13.33" width="30" height="6.67" fill="#ffce00"/>
+              </svg>
+              <!-- Italia -->
+              <svg v-else-if="lang.code === 'it'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 20">
+                <rect width="10" height="20" fill="#009246"/>
+                <rect x="10" width="10" height="20" fill="#fff"/>
+                <rect x="20" width="10" height="20" fill="#ce2b37"/>
+              </svg>
+              <!-- Brasil -->
+              <svg v-else-if="lang.code === 'pt'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 20">
+                <rect width="30" height="20" fill="#009c3b"/>
+                <polygon points="15,2 28,10 15,18 2,10" fill="#ffdf00"/>
+                <circle cx="15" cy="10" r="4.2" fill="#002776"/>
               </svg>
             </span>
           </button>
@@ -48,6 +76,9 @@
           <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-1 gap-lg-3 align-items-lg-center">
             <li class="nav-item">
               <a class="nav-link" href="#trayectoria">{{ t('nav.trayectoria') }}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#servicios">{{ t('nav.servicios') }}</a>
             </li>
             <li class="nav-item dropdown">
               <a
@@ -85,7 +116,6 @@ import { useI18n } from '@/i18n/useI18n'
 const { locale, t, setLocale } = useI18n()
 
 const navLinks = [
-  { href: '#servicios', labelKey: 'nav.servicios' },
   { href: '#testimonios', labelKey: 'nav.testimonios' },
   { href: '#contacto', labelKey: 'nav.contacto' },
 ]
@@ -94,6 +124,9 @@ const languages = [
   { code: 'es', label: 'Español' },
   { code: 'en', label: 'English' },
   { code: 'fr', label: 'Français' },
+  { code: 'de', label: 'Deutsch' },
+  { code: 'it', label: 'Italiano' },
+  { code: 'pt', label: 'Português' },
 ]
 
 function setLanguage(code) {
@@ -111,7 +144,9 @@ function setLanguage(code) {
 .lang-switcher {
   order: 1;
   margin-left: auto;
-  flex-shrink: 0;
+  flex-shrink: 1;
+  max-width: calc(100% - 3.5rem);
+  justify-content: flex-end;
 }
 
 .navbar-toggler {
@@ -129,6 +164,8 @@ function setLanguage(code) {
   .lang-switcher {
     order: 3;
     margin-left: 1rem;
+    max-width: none;
+    flex-shrink: 0;
   }
 
   .navbar-collapse {
@@ -228,8 +265,8 @@ function setLanguage(code) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.35rem;
-  height: 2.35rem;
+  width: 2.05rem;
+  height: 2.05rem;
   padding: 0;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 0.45rem;
@@ -259,8 +296,8 @@ function setLanguage(code) {
 
 .lang-switcher__flag {
   display: inline-flex;
-  width: 1.55rem;
-  height: 1.05rem;
+  width: 1.35rem;
+  height: 0.92rem;
   border-radius: 0.15rem;
   overflow: hidden;
   line-height: 0;

@@ -18,7 +18,7 @@
         <header class="track-modal__header">
           <div class="track-modal__heading min-w-0">
             <p class="track-modal__eyebrow mb-1">{{ title }}</p>
-            <h2 :id="titleId" class="track-modal__title mb-0">{{ formato?.nombre }}</h2>
+            <h2 :id="titleId" class="track-modal__title mb-0">{{ modalTitle }}</h2>
           </div>
           <button
             type="button"
@@ -33,31 +33,54 @@
         </header>
 
         <p class="track-modal__hint mb-0">
-          Elige el concierto completo o uno/varios temas. Si marcas el completo, se desmarcan los temas sueltos.
+          Marca una o varias opciones. Precios en dólares americanos (USD).
         </p>
+
+        <ul v-if="temas.length > 1" class="track-modal__seleccion list-unstyled mb-0">
+          <li v-for="tema in temas" :key="tema.id" class="track-modal__seleccion-item">
+            {{ tema.nombre }}
+          </li>
+        </ul>
 
         <ul class="track-modal__list list-unstyled mb-0">
           <li
-            v-for="tema in temas"
-            :key="tema.id"
+            v-for="opcion in opciones"
+            :key="opcion.id"
             class="track-modal__item"
-            :class="{ 'track-modal__item--completo': tema.esCompleto }"
+            :class="{
+              'track-modal__item--selected': selectedFormatoIds.includes(opcion.id),
+              'track-modal__item--disabled': !isOpcionDisponible(opcion),
+            }"
           >
-            <label class="track-modal__label">
+            <label class="track-modal__label" :class="{ 'track-modal__label--disabled': !isOpcionDisponible(opcion) }">
               <input
                 type="checkbox"
                 class="track-modal__check"
-                :checked="selectedIds.includes(tema.id)"
-                @change="toggleTema(tema)"
+                :checked="selectedFormatoIds.includes(opcion.id)"
+                :disabled="!isOpcionDisponible(opcion)"
+                :aria-label="opcion.nombre"
+                @change="toggleFormato(opcion)"
               >
-              <span class="track-modal__nombre">{{ tema.nombre }}</span>
-              <span class="track-modal__precio">{{ priceForTema(tema) }}</span>
+              <span class="track-modal__opcion-info min-w-0">
+                <span class="track-modal__nombre">{{ opcion.nombre }}</span>
+                <span v-if="opcion.descripcion" class="track-modal__desc">{{ opcion.descripcion }}</span>
+                <span class="track-modal__precio">{{ priceForOpcion(opcion) }}</span>
+              </span>
             </label>
           </li>
         </ul>
 
         <footer class="track-modal__footer">
-          <p class="track-modal__resumen mb-0">{{ resumenSeleccion }}</p>
+          <p class="track-modal__resumen mb-0">{{ resumenFormatos }}</p>
+          <p class="track-modal__total mb-0" :class="{ 'track-modal__total--pending': totalUsd == null && selectedFormatos.length > 0 }">
+            {{ totalLabel }}
+          </p>
+          <p
+            v-if="promoUsd != null"
+            class="track-modal__promo mb-0"
+          >
+            Precio promo (todas las opciones): {{ formatUsd(promoUsd) }}
+          </p>
           <a
             class="btn btn-whatsapp wa-pill-btn track-modal__wa"
             :href="whatsappHref"
@@ -65,6 +88,7 @@
             rel="noopener noreferrer"
             :aria-disabled="!canSubmit"
             :class="{ 'opacity-50 pe-none': !canSubmit }"
+            aria-label="Solicitar selección por WhatsApp"
             @click="onSubmitClick"
           >
             <svg
@@ -96,31 +120,200 @@ const props = defineProps({
   title: { type: String, required: true },
   subtitle: { type: String, default: '' },
   image: { type: String, default: '' },
-  formato: { type: Object, default: null },
   temas: { type: Array, default: () => [] },
+  opciones: { type: Array, default: () => [] },
 })
 
 const emit = defineEmits(['close'])
 
 const titleId = `track-modal-title-${Math.random().toString(36).slice(2, 9)}`
 const panelRef = ref(null)
-const selectedIds = ref([])
+const selectedFormatoIds = ref([])
 
 const whatsappReady = computed(() => isWhatsAppConfigured())
 
-const selectedTemas = computed(() =>
-  props.temas.filter((t) => selectedIds.value.includes(t.id)),
+const isCompleto = computed(() => props.temas.some((t) => t.esCompleto))
+const temaCount = computed(() => props.temas.length)
+
+const selectedFormatos = computed(() =>
+  props.opciones.filter((o) => selectedFormatoIds.value.includes(o.id)),
 )
 
 const canSubmit = computed(
-  () => whatsappReady.value && selectedTemas.value.length > 0 && props.formato,
+  () =>
+    whatsappReady.value &&
+    props.temas.length > 0 &&
+    selectedFormatos.value.length > 0,
 )
 
-const resumenSeleccion = computed(() => {
-  const n = selectedTemas.value.length
-  if (!n) return 'Ningún ítem seleccionado'
-  if (selectedTemas.value.some((t) => t.esCompleto)) return 'Concierto completo seleccionado'
-  return n === 1 ? '1 tema seleccionado' : `${n} temas seleccionados`
+const modalTitle = computed(() => {
+  if (isCompleto.value) return 'Concierto completo'
+  if (temaCount.value === 1) return props.temas[0]?.nombre || 'Obra seleccionada'
+  return `${temaCount.value} obras seleccionadas`
+})
+
+const resumenFormatos = computed(() => {
+  const n = selectedFormatos.value.length
+  if (!n) return 'Ninguna opción seleccionada'
+  return n === 1 ? '1 opción seleccionada' : `${n} opciones seleccionadas`
+})
+
+/** Extrae un monto USD numérico desde número o texto (ignora placeholders tipo XX). */
+function parseUsdAmount(value) {
+  if (typeof value === 'number' && Number.isFinite(value) && value >= 0) return value
+  if (typeof value !== 'string') return null
+  const raw = value.trim()
+  if (!raw || /xx/i.test(raw)) return null
+  const normalized = raw.replace(/,/g, '')
+  const match = normalized.match(/(\d+(?:\.\d+)?)/)
+  if (!match) return null
+  const n = Number(match[1])
+  return Number.isFinite(n) ? n : null
+}
+
+function formatUsd(amount) {
+  if (amount == null || !Number.isFinite(amount)) return 'US$ XX'
+  const rounded = Math.round(amount * 100) / 100
+  const text =
+    Number.isInteger(rounded)
+      ? String(rounded)
+      : rounded.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+  return `US$ ${text}`
+}
+
+function unitUsdForOpcion(opcion) {
+  if (!opcion) return null
+  if (isCompleto.value) {
+    return (
+      parseUsdAmount(opcion.precioCompletoUsd) ??
+      parseUsdAmount(opcion.priceCompleto) ??
+      parseUsdAmount(opcion.price)
+    )
+  }
+  return (
+    parseUsdAmount(opcion.precioTemaUsd) ??
+    parseUsdAmount(opcion.priceTema) ??
+    parseUsdAmount(opcion.price)
+  )
+}
+
+/** Score Coro no aplica si alguna obra seleccionada no tiene coro. */
+function isOpcionDisponible(opcion) {
+  if (!opcion) return false
+  if (/score-coro/i.test(String(opcion.id)) && props.temas.some((t) => t.sinCoro)) {
+    return false
+  }
+  return true
+}
+
+/** Precio USD de una obra concreta para una opción (p. ej. Full Score por tema). */
+function temaUsdForOpcion(tema, opcion) {
+  if (!tema || !opcion) return null
+  if (tema.sinCoro && /score-coro/i.test(String(opcion.id))) return null
+  if (tema.esCompleto) {
+    return (
+      parseUsdAmount(tema.preciosUsd?.[opcion.id]) ??
+      unitUsdForOpcion(opcion)
+    )
+  }
+  return (
+    parseUsdAmount(tema.preciosUsd?.[opcion.id]) ??
+    unitUsdForOpcion(opcion)
+  )
+}
+
+function lineTotalUsd(opcion) {
+  if (!opcion) return null
+  if (!isOpcionDisponible(opcion)) return null
+  if (isCompleto.value) {
+    return temaUsdForOpcion(props.temas[0], opcion) ?? unitUsdForOpcion(opcion)
+  }
+
+  const hasPerTema = props.temas.some(
+    (tema) => parseUsdAmount(tema?.preciosUsd?.[opcion.id]) != null,
+  )
+  if (hasPerTema) {
+    let sum = 0
+    for (const tema of props.temas) {
+      const p = temaUsdForOpcion(tema, opcion)
+      if (p == null) return null
+      sum += p
+    }
+    return sum
+  }
+
+  const unit = unitUsdForOpcion(opcion)
+  if (unit == null) return null
+  return unit * Math.max(temaCount.value, 1)
+}
+
+function unitPriceLabel(opcion) {
+  if (!isOpcionDisponible(opcion)) return 'No aplica (sin coro)'
+  const line = lineTotalUsd(opcion)
+  if (line != null && (isCompleto.value || temaCount.value === 1)) {
+    return formatUsd(line)
+  }
+  if (line != null && temaCount.value > 1) {
+    return formatUsd(line)
+  }
+  if (isCompleto.value) return opcion?.priceCompleto || opcion?.price || 'US$ XX'
+  return opcion?.priceTema || opcion?.price || 'US$ XX'
+}
+
+function priceForOpcion(opcion) {
+  if (!isOpcionDisponible(opcion)) return 'No aplica (sin coro en la selección)'
+  const line = lineTotalUsd(opcion)
+  if (line != null) {
+    if (isCompleto.value || temaCount.value <= 1) return formatUsd(line)
+    return `Suma de ${temaCount.value} obras: ${formatUsd(line)}`
+  }
+  const unitLabel = unitPriceLabel(opcion)
+  if (isCompleto.value || temaCount.value <= 1) return unitLabel
+  return `${unitLabel} × ${temaCount.value} obras`
+}
+
+const totalUsd = computed(() => {
+  if (!selectedFormatos.value.length) return null
+  let sum = 0
+  for (const opcion of selectedFormatos.value) {
+    const line = lineTotalUsd(opcion)
+    if (line == null) return null
+    sum += line
+  }
+  return sum
+})
+
+const totalLabel = computed(() => {
+  if (!selectedFormatos.value.length) return 'Total: US$ 0'
+  if (totalUsd.value == null) return 'Total: por cotizar (precios provisionales)'
+  return `Total: ${formatUsd(totalUsd.value)}`
+})
+
+const opcionesDisponibles = computed(() =>
+  props.opciones.filter((o) => isOpcionDisponible(o)),
+)
+
+const allOpcionesSeleccionadas = computed(() => {
+  const disponibles = opcionesDisponibles.value
+  if (!disponibles.length || !selectedFormatos.value.length) return false
+  return disponibles.every((o) => selectedFormatoIds.value.includes(o.id))
+})
+
+/** Precio promo si están todas las opciones aplicables de la selección. */
+const promoUsd = computed(() => {
+  if (!allOpcionesSeleccionadas.value || !props.temas.length) return null
+  let sum = 0
+  for (const tema of props.temas) {
+    const promo = parseUsdAmount(tema.precioPromoUsd)
+    if (promo == null) return null
+    sum += promo
+  }
+  return sum
+})
+
+const promoLabel = computed(() => {
+  if (promoUsd.value == null) return ''
+  return `Precio promo (todas las opciones): ${formatUsd(promoUsd.value)}`
 })
 
 const whatsappHref = computed(() => {
@@ -130,40 +323,26 @@ const whatsappHref = computed(() => {
     title: props.title,
     subtitle: props.subtitle,
     image: props.image,
-    formato: props.formato,
-    temas: selectedTemas.value.map((t) => ({
-      ...t,
-      price: priceForTema(t),
+    formatos: selectedFormatos.value.map((opcion) => ({
+      ...opcion,
+      price: priceForOpcion(opcion),
     })),
+    temas: props.temas,
+    totalUsd: totalUsd.value,
+    totalLabel: totalLabel.value,
+    promoUsd: promoUsd.value,
+    promoLabel: promoLabel.value,
   })
 })
 
-function priceForTema(tema) {
-  if (!props.formato) return '$XX.XXX'
-  if (tema.esCompleto) {
-    return props.formato.priceCompleto || props.formato.price || '$XX.XXX'
-  }
-  return props.formato.priceTema || props.formato.price || '$XX.XXX'
-}
-
-function toggleTema(tema) {
-  const id = tema.id
-  const checked = !selectedIds.value.includes(id)
-
-  if (tema.esCompleto) {
-    selectedIds.value = checked ? [id] : []
-    return
-  }
-
-  const completo = props.temas.find((t) => t.esCompleto)
-  let next = selectedIds.value.filter((x) => x !== completo?.id)
-
-  if (checked) {
-    if (!next.includes(id)) next = [...next, id]
+function toggleFormato(opcion) {
+  if (!isOpcionDisponible(opcion)) return
+  const id = opcion.id
+  if (selectedFormatoIds.value.includes(id)) {
+    selectedFormatoIds.value = selectedFormatoIds.value.filter((x) => x !== id)
   } else {
-    next = next.filter((x) => x !== id)
+    selectedFormatoIds.value = [...selectedFormatoIds.value, id]
   }
-  selectedIds.value = next
 }
 
 function close() {
@@ -185,13 +364,23 @@ function onSubmitClick(e) {
 }
 
 watch(
+  () => props.temas.map((t) => t.id).join('|'),
+  () => {
+    selectedFormatoIds.value = selectedFormatoIds.value.filter((id) => {
+      const opcion = props.opciones.find((o) => o.id === id)
+      return opcion ? isOpcionDisponible(opcion) : false
+    })
+  },
+)
+
+watch(
   () => props.open,
   async (isOpen) => {
     if (isOpen) {
-      selectedIds.value = []
+      selectedFormatoIds.value = []
       document.body.style.overflow = 'hidden'
       await nextTick()
-      panelRef.value?.querySelector('input, button')?.focus?.()
+      panelRef.value?.querySelector('input:not([disabled]), button, a')?.focus?.()
     } else {
       document.body.style.overflow = ''
     }
@@ -286,6 +475,31 @@ watch(
   color: var(--ms-text-muted);
 }
 
+.track-modal__seleccion {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  max-height: 6.5rem;
+  overflow-y: auto;
+  padding: 0.55rem 0.65rem;
+  border-radius: 0.45rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  scrollbar-width: thin;
+}
+
+.track-modal__seleccion-item {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  line-height: 1.35;
+  color: var(--ms-text-muted);
+}
+
+.track-modal__seleccion-item::before {
+  content: '• ';
+  color: var(--ms-accent-on-dark);
+}
+
 .track-modal__list {
   overflow-y: auto;
   min-height: 0;
@@ -299,41 +513,69 @@ watch(
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.track-modal__item--completo {
+.track-modal__item:first-child {
+  border-top: none;
+}
+
+.track-modal__item--selected {
   background: rgba(var(--ms-accent-rgb), 0.1);
   border-radius: 0.45rem;
-  border-top: none;
-  margin-bottom: 0.25rem;
+}
+
+.track-modal__item--disabled {
+  opacity: 0.55;
 }
 
 .track-modal__label {
   display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
+  grid-template-columns: auto 1fr;
+  align-items: start;
   gap: 0.65rem;
-  padding: 0.65rem 0.45rem;
+  padding: 0.7rem 0.4rem;
   cursor: pointer;
-  font-family: var(--font-body);
+  margin: 0;
+}
+
+.track-modal__label--disabled {
+  cursor: not-allowed;
 }
 
 .track-modal__check {
   width: 1.05rem;
   height: 1.05rem;
+  margin-top: 0.15rem;
   accent-color: var(--ms-accent);
+  flex-shrink: 0;
+}
+
+.track-modal__opcion-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
 }
 
 .track-modal__nombre {
-  font-size: 0.88rem;
-  font-weight: 600;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-weight: 700;
   line-height: 1.3;
   color: var(--ms-text);
 }
 
+.track-modal__desc {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--ms-text-muted);
+}
+
 .track-modal__precio {
-  font-size: 0.8rem;
-  font-weight: 700;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 800;
   color: var(--ms-accent-on-dark);
-  white-space: nowrap;
+  margin-top: 0.15rem;
 }
 
 .track-modal__footer {
@@ -350,6 +592,30 @@ watch(
   font-size: 0.78rem;
   color: var(--ms-text-muted);
   text-align: center;
+}
+
+.track-modal__total {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--ms-accent-on-dark);
+  text-align: center;
+  letter-spacing: 0.01em;
+}
+
+.track-modal__total--pending {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ms-text-muted);
+}
+
+.track-modal__promo {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #7dcea0;
+  text-align: center;
+  line-height: 1.35;
 }
 
 .track-modal__wa {

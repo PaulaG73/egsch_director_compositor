@@ -2,7 +2,7 @@ import { computed, watch } from 'vue'
 import { useStore } from 'vuex'
 import { translate } from './messages'
 
-const HTML_LANG = { es: 'es', en: 'en', fr: 'fr' }
+const HTML_LANG = { es: 'es', en: 'en', fr: 'fr', de: 'de', it: 'it', pt: 'pt' }
 
 /**
  * Locale reactivo + helper `t('nav.contacto')` / `t('footer.rights', { year: 2026 })`.

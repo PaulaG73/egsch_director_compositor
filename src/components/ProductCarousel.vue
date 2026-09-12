@@ -32,17 +32,19 @@
           :key="`${proyecto.id}-${idx}`"
           class="product-carousel-slide"
         >
-          <CardComponent
-            :product-id="proyecto.id"
-            :title="proyecto.title"
-            :subtitle="proyecto.subtitle || ''"
-            :image="proyecto.image"
-            :opciones="proyecto.opciones"
-            :temas="proyecto.temas || []"
-            :agotado="Boolean(proyecto.agotado)"
-            :compact="compact"
-            :image-position="proyecto.imagePosition || ''"
-          />
+          <slot :item="proyecto" :index="idx">
+            <CardComponent
+              :product-id="proyecto.id"
+              :title="proyecto.title"
+              :subtitle="proyecto.subtitle || ''"
+              :image="proyecto.image"
+              :opciones="proyecto.opciones"
+              :temas="proyecto.temas || []"
+              :agotado="Boolean(proyecto.agotado)"
+              :compact="compact"
+              :image-position="proyecto.imagePosition || ''"
+            />
+          </slot>
         </div>
       </div>
     </div>

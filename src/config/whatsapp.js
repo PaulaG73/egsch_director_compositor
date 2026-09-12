@@ -14,7 +14,6 @@ const PRODUCT_SHARE_BY_IMAGE = {
   '/img/Withney2.jpg': '/share/whitney.html',
   '/img/Nino1.jpeg': '/share/nino.html',
   '/img/Mi_pobre_angelito.jpg': '/share/mi-pobre-angelito.html',
-  '/img/Superman.jpg': '/share/superman.html',
   '/img/Frozen.jpg': '/share/frozen.html',
   '/img/Rey_leon.jpg': '/share/rey-leon.html',
 }
@@ -84,13 +83,24 @@ function priceForWhatsAppMessage(price) {
   return price.trim().replace(/\$/g, '').replace(/\s+/g, ' ').trim()
 }
 
-/** CTA Contáctanos del footer: solo texto, sin enlace. */
+/** CTA Contáctame del footer: solo texto, sin enlace. */
 export function getWhatsAppFooterUrl() {
   const digits = digitsOnly()
   if (!digits) return '#'
 
   const text =
     'Hola Eduardo, estoy escribiendo desde tu página web y quisiera conversar contigo sobre un tema en particular. Estás disponible?'
+
+  return `https://api.whatsapp.com/send?phone=${digits}&text=${encodeURIComponent(text)}`
+}
+
+/** CTA Contáctame del hero. */
+export function getWhatsAppHeroUrl() {
+  const digits = digitsOnly()
+  if (!digits) return '#'
+
+  const text =
+    'Hola Eduardo, te contacto desde tu página web. Me gustaría conversar contigo sobre un proyecto musical.'
 
   return `https://api.whatsapp.com/send?phone=${digits}&text=${encodeURIComponent(text)}`
 }
@@ -130,7 +140,7 @@ export function getWhatsAppProductOptionUrl(payload) {
 
   const priceTxt = priceForWhatsAppMessage(price)
   if (priceTxt) {
-    parts.push(`Precio (CLP): ${priceTxt}`)
+    parts.push(`Precio (USD): ${priceTxt}`)
   }
 
   const text = parts.join('\n').trimEnd()
@@ -138,15 +148,20 @@ export function getWhatsAppProductOptionUrl(payload) {
 }
 
 /**
- * WhatsApp para selección de formato + uno o varios temas (p. ej. Queen).
- * Incluye siempre la URL de vista previa de la tarjeta del producto (misma imagen, 1 o N temas).
+ * WhatsApp para selección de obra(s) + opción(es) (p. ej. Queen / Nino Bravo).
+ * Incluye siempre la URL de vista previa de la tarjeta del producto.
  * @param {{
  *   productId?: string,
  *   title?: string,
  *   subtitle?: string,
  *   image?: string,
- *   formato?: { id?: string, nombre?: string },
- *   temas?: Array<{ id?: string, nombre?: string, esCompleto?: boolean, price?: string }>
+ *   formato?: { id?: string, nombre?: string, price?: string },
+ *   formatos?: Array<{ id?: string, nombre?: string, price?: string }>,
+ *   temas?: Array<{ id?: string, nombre?: string, esCompleto?: boolean, price?: string }>,
+ *   totalUsd?: number | null,
+ *   totalLabel?: string,
+ *   promoUsd?: number | null,
+ *   promoLabel?: string
  * }} payload
  */
 export function getWhatsAppProductSelectionUrl(payload) {
@@ -155,25 +170,72 @@ export function getWhatsAppProductSelectionUrl(payload) {
 
   const title = typeof payload?.title === 'string' ? payload.title.trim() : ''
   const subtitle = typeof payload?.subtitle === 'string' ? payload.subtitle.trim() : ''
-  const formato = payload?.formato && typeof payload.formato === 'object' ? payload.formato : {}
-  const formatoNombre = typeof formato.nombre === 'string' ? formato.nombre.trim() : ''
   const temas = Array.isArray(payload?.temas) ? payload.temas : []
   const previewUrl = resolveProductPreviewUrl(payload?.image || '')
+
+  let formatos = Array.isArray(payload?.formatos) ? payload.formatos : []
+  if (!formatos.length && payload?.formato && typeof payload.formato === 'object') {
+    formatos = [payload.formato]
+  }
 
   const parts = ['Hola, quiero solicitar:']
   if (title) parts.push(title)
   if (subtitle) parts.push(subtitle)
-  if (formatoNombre) parts.push(`Formato: ${formatoNombre}`)
   parts.push('')
 
   if (temas.length) {
-    parts.push('Selección:')
+    parts.push(temas.length === 1 ? 'Obra:' : 'Obras:')
     for (const tema of temas) {
       const nombre = typeof tema?.nombre === 'string' ? tema.nombre.trim() : ''
       if (!nombre) continue
-      const priceTxt = priceForWhatsAppMessage(tema.price || '')
-      parts.push(priceTxt ? `• ${nombre} — ${priceTxt} CLP` : `• ${nombre}`)
+      parts.push(`• ${nombre}`)
     }
+    parts.push('')
+  }
+
+  if (formatos.length) {
+    parts.push(formatos.length === 1 ? 'Opción:' : 'Opciones:')
+    for (const formato of formatos) {
+      const nombre = typeof formato?.nombre === 'string' ? formato.nombre.trim() : ''
+      if (!nombre) continue
+      const priceTxt = priceForWhatsAppMessage(
+        typeof formato?.price === 'string' ? formato.price : '',
+      )
+      parts.push(priceTxt ? `• ${nombre} — ${priceTxt}` : `• ${nombre}`)
+    }
+    parts.push('')
+  }
+
+  const totalUsd = payload?.totalUsd
+  if (typeof totalUsd === 'number' && Number.isFinite(totalUsd)) {
+    const rounded = Math.round(totalUsd * 100) / 100
+    const text =
+      Number.isInteger(rounded)
+        ? String(rounded)
+        : rounded.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    parts.push(`Total (USD): US$ ${text}`)
+  } else if (typeof payload?.totalLabel === 'string' && payload.totalLabel.trim()) {
+    parts.push(payload.totalLabel.trim())
+  }
+
+  const promoUsd = payload?.promoUsd
+  if (typeof promoUsd === 'number' && Number.isFinite(promoUsd)) {
+    const rounded = Math.round(promoUsd * 100) / 100
+    const text =
+      Number.isInteger(rounded)
+        ? String(rounded)
+        : rounded.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    parts.push(`Precio promo (todas las opciones): US$ ${text}`)
+  } else if (typeof payload?.promoLabel === 'string' && payload.promoLabel.trim()) {
+    parts.push(payload.promoLabel.trim())
+  }
+
+  if (
+    (typeof totalUsd === 'number' && Number.isFinite(totalUsd)) ||
+    (typeof promoUsd === 'number' && Number.isFinite(promoUsd)) ||
+    (typeof payload?.totalLabel === 'string' && payload.totalLabel.trim()) ||
+    (typeof payload?.promoLabel === 'string' && payload.promoLabel.trim())
+  ) {
     parts.push('')
   }
 
