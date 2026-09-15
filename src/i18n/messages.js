@@ -15,7 +15,7 @@ export const messages = {
     hero: {
       role: 'Director de Orquesta, Compositor y Orquestador',
       disciplines: 'Arreglos - Orquestaciones - Transcripciones - Composiciones',
-      quote: '«Llevando tu música a la partitura y al escenario».',
+      quote: '«Llevando tu música a la partitura\ny al escenario».',
       photoAlt: 'Eduardo Gajardo Schmidlin, Director de Orquesta, Compositor y Orquestador',
       cta: 'Contáctame',
     },
@@ -47,7 +47,7 @@ export const messages = {
     hero: {
       role: 'Conductor, Composer & Orchestrator',
       disciplines: 'Arrangements — Orchestrations — Transcriptions — Compositions',
-      quote: '«Bringing your music to the score and to the stage».',
+      quote: '«Bringing your music to the score\nand to the stage».',
       photoAlt: 'Eduardo Gajardo Schmidlin, Conductor, Composer and Orchestrator',
       cta: 'Contact me',
     },
@@ -79,7 +79,7 @@ export const messages = {
     hero: {
       role: 'Chef d’orchestre, Compositeur et Orchestrateur',
       disciplines: 'Arrangement — Orchestration — Transcription — Composition',
-      quote: '« Porter votre musique à la partition et à la scène ».',
+      quote: '« Porter votre musique à la partition\net à la scène ».',
       photoAlt: 'Eduardo Gajardo Schmidlin, Chef d’orchestre, Compositeur et Orchestrateur',
       cta: 'Contactez-moi',
     },
@@ -111,7 +111,7 @@ export const messages = {
     hero: {
       role: 'Dirigent, Komponist und Orchestrator',
       disciplines: 'Arrangements — Orchestration — Transkriptionen — Komposition',
-      quote: '«Ihre Musik auf die Partitur und auf die Bühne bringen».',
+      quote: '«Ihre Musik auf die Partitur\nund auf die Bühne bringen».',
       photoAlt: 'Eduardo Gajardo Schmidlin, Dirigent, Komponist und Orchestrator',
       cta: 'Kontaktieren Sie mich',
     },
@@ -143,7 +143,7 @@ export const messages = {
     hero: {
       role: 'Direttore d’orchestra, Compositore e Orchestratore',
       disciplines: 'Arrangiamenti — Orchestrazioni — Trascrizioni — Composizioni',
-      quote: '«Portare la tua musica sulla partitura e sul palcoscenico».',
+      quote: '«Portare la tua musica sulla partitura\ne sul palcoscenico».',
       photoAlt: 'Eduardo Gajardo Schmidlin, Direttore d’orchestra, Compositore e Orchestratore',
       cta: 'Contattami',
     },
@@ -175,7 +175,7 @@ export const messages = {
     hero: {
       role: 'Maestro, Compositor e Orquestrador',
       disciplines: 'Arranjos — Orquestrações — Transcrições — Composições',
-      quote: '«Levando a sua música à partitura e ao palco».',
+      quote: '«Levando a sua música à partitura\ne ao palco».',
       photoAlt: 'Eduardo Gajardo Schmidlin, Maestro, Compositor e Orquestrador',
       cta: 'Fale comigo',
     },

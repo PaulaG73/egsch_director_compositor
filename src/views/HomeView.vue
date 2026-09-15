@@ -25,15 +25,24 @@
             <template v-for="(item, index) in heroDisciplines" :key="index">
               <span class="hero-titulo__item">{{ item }}</span>
               <span
+                v-if="index < heroDisciplines.length - 1"
+                class="hero-titulo__sep"
+                :class="{
+                  'hero-titulo__sep--after-pair': index === 1,
+                  'hero-titulo__sep--second-line': index === 2,
+                }"
+                aria-hidden="true"
+              >·</span>
+              <span
                 v-if="index === 1 && heroDisciplines.length > 2"
                 class="hero-titulo__break"
                 aria-hidden="true"
               />
               <span
-                v-else-if="index < heroDisciplines.length - 1"
-                class="hero-titulo__sep"
+                v-if="index === 2 && heroDisciplines.length > 3"
+                class="hero-titulo__break hero-titulo__break--xs"
                 aria-hidden="true"
-              >·</span>
+              />
             </template>
           </span>
           <span class="hero-cita">{{ t('hero.quote') }}</span>
@@ -215,7 +224,7 @@
   <section id="productos-sinfonicos" class="home-section home-section--ink pt-4 pt-md-5 pb-2 pb-md-3">
     <div class="container text-center">
       <h2 class="section-title mb-4">{{ t('nav.productosSinfonicos') }}</h2>
-      <div class="productos-grid">
+      <div v-if="!productosComoCarrusel" class="productos-grid">
         <CardComponent
           v-for="proyecto in productosSinfonicos"
           :key="proyecto.id"
@@ -230,6 +239,12 @@
         />
       </div>
     </div>
+    <ProductCarousel
+      v-if="productosComoCarrusel"
+      :items="productosSinfonicos"
+      aria-label="productos sinfónicos"
+      compact
+    />
     <SectionScrollUp />
   </section>
 
@@ -326,9 +341,17 @@ const trayectoriaItemsRef = ref(null)
 const trayectoriaInView = ref(false)
 const trayectoriaSlide = ref(0)
 const reduceMotion = ref(false)
+/** Carrusel cuando no caben las 3 tarjetas en fila (< 992px). */
+const productosComoCarrusel = ref(true)
 
 let heroFotoObserver = null
 let trayectoriaObserver = null
+let productosLayoutMql = null
+
+function syncProductosLayout() {
+  if (typeof window === 'undefined') return
+  productosComoCarrusel.value = !window.matchMedia('(min-width: 992px)').matches
+}
 
 function goToTrayectoria(index) {
   const total = trayectoriaItems.length
@@ -403,6 +426,9 @@ onMounted(() => {
   reduceMotion.value = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   setupHeroFotoReveal()
   setupTrayectoriaReveal()
+  syncProductosLayout()
+  productosLayoutMql = window.matchMedia('(min-width: 992px)')
+  productosLayoutMql.addEventListener('change', syncProductosLayout)
 })
 
 onUnmounted(() => {
@@ -410,6 +436,8 @@ onUnmounted(() => {
   heroFotoObserver = null
   trayectoriaObserver?.disconnect()
   trayectoriaObserver = null
+  productosLayoutMql?.removeEventListener('change', syncProductosLayout)
+  productosLayoutMql = null
 })
 
 </script>
@@ -890,11 +918,11 @@ onUnmounted(() => {
   align-items: baseline;
   column-gap: 0;
   row-gap: 0.28rem;
-  max-width: 22rem;
+  max-width: min(100%, 24rem);
   margin-inline: auto;
-  font-size: clamp(0.92rem, 4.5vw, 1.15rem);
+  font-size: clamp(0.88rem, 4.2vw, 1.12rem);
   line-height: 1.4;
-  letter-spacing: 0.055em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   font-weight: 600;
 }
@@ -916,13 +944,40 @@ onUnmounted(() => {
   height: 0;
 }
 
+/* Solo en pantallas muy estrechas: 3.ª y 4.ª disciplina en filas aparte */
+.hero-titulo__break--xs {
+  display: none;
+}
+
+/* Moto G4 / tablets (Surface Pro en portrait): 2+2 con punto en ambas filas */
+@media (max-width: 991.98px) {
+  .hero-titulo__sep--after-pair {
+    display: none;
+  }
+}
+
+@media (max-width: 359.98px) {
+  .hero-titulo__break--xs {
+    display: block;
+  }
+
+  .hero-titulo__sep--second-line {
+    display: none;
+  }
+
+  .hero-titulo__lineas {
+    font-size: clamp(0.9rem, 5vw, 1.05rem);
+    letter-spacing: 0.04em;
+  }
+}
+
 .hero-cita {
   display: block;
   margin-top: 0.55rem;
   font-style: italic;
   color: var(--ms-accent-on-dark);
   font-weight: 600;
-  white-space: normal;
+  white-space: pre-line;
   overflow-wrap: break-word;
   line-height: 1.4;
   letter-spacing: 0.01em;
@@ -930,10 +985,15 @@ onUnmounted(() => {
   font-size: clamp(0.9rem, 3.9vw, 1.1rem);
 }
 
+@media (min-width: 360px) and (max-width: 991.98px) {
+  .hero-titulo__lineas {
+    max-width: min(100%, 28rem);
+  }
+}
+
 @media (min-width: 576px) {
   .hero-titulo__lineas {
-    max-width: 28rem;
-    font-size: clamp(1rem, 2.8vw, 1.2rem);
+    font-size: clamp(1rem, 2.6vw, 1.18rem);
   }
 }
 
@@ -1174,26 +1234,11 @@ onUnmounted(() => {
 
 .productos-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.25rem;
-  max-width: 22rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+  max-width: 64rem;
   margin: 0 auto;
   text-align: left;
-}
-
-@media (min-width: 768px) {
-  .productos-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    max-width: 42rem;
-    gap: 1.5rem;
-  }
-}
-
-@media (min-width: 992px) {
-  .productos-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    max-width: 64rem;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
