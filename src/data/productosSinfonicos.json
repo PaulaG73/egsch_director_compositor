@@ -284,5 +284,135 @@
         "precioTemaUsd": null
       }
     ]
+  },
+  {
+    "id": "4",
+    "title": "Música de Películas/Musicales",
+    "subtitle": "Sinfónico",
+    "image": "/img/Rey_leon.jpg",
+    "temas": [
+      {
+        "id": "peliculas-tema-08",
+        "nombre": "Obertura (Medley)",
+        "sinCoro": true,
+        "preciosUsd": {
+          "peliculas-full-score-orquesta": 80,
+          "peliculas-partes-individuales": 120
+        },
+        "precioPromoUsd": null
+      },
+      {
+        "id": "peliculas-tema-01",
+        "nombre": "Somewhere in my memory (Mi pobre angelito)",
+        "preciosUsd": {
+          "peliculas-full-score-orquesta": 60,
+          "peliculas-score-coro": 40,
+          "peliculas-partes-individuales": 90
+        },
+        "precioPromoUsd": null
+      },
+      {
+        "id": "peliculas-tema-02",
+        "nombre": "Let It Go (Frozen)",
+        "preciosUsd": {
+          "peliculas-full-score-orquesta": 60,
+          "peliculas-score-coro": 20,
+          "peliculas-partes-individuales": 90
+        },
+        "precioPromoUsd": null
+      },
+      {
+        "id": "peliculas-tema-03",
+        "nombre": "Circle of Life (El Rey León)",
+        "preciosUsd": {
+          "peliculas-full-score-orquesta": 50,
+          "peliculas-score-coro": 20,
+          "peliculas-partes-individuales": 75
+        },
+        "precioPromoUsd": null
+      },
+      {
+        "id": "peliculas-tema-04",
+        "nombre": "Main Theme (Spiderman)",
+        "preciosUsd": {
+          "peliculas-full-score-orquesta": 60,
+          "peliculas-score-coro": 30,
+          "peliculas-partes-individuales": 90
+        },
+        "precioPromoUsd": null
+      },
+      {
+        "id": "peliculas-tema-05",
+        "nombre": "Main Theme (The Avengers)",
+        "preciosUsd": {
+          "peliculas-full-score-orquesta": 60,
+          "peliculas-score-coro": 30,
+          "peliculas-partes-individuales": 90
+        },
+        "precioPromoUsd": null
+      },
+      {
+        "id": "peliculas-tema-06",
+        "nombre": "Main Theme (Jurassic Park)",
+        "sinCoro": true,
+        "preciosUsd": {
+          "peliculas-full-score-orquesta": 60,
+          "peliculas-partes-individuales": 90
+        },
+        "precioPromoUsd": null
+      },
+      {
+        "id": "peliculas-tema-07",
+        "nombre": "Over the Rainbow (El Mago de Oz)",
+        "preciosUsd": {
+          "peliculas-full-score-orquesta": 60,
+          "peliculas-score-coro": 40,
+          "peliculas-partes-individuales": 90
+        },
+        "precioPromoUsd": null
+      },
+      {
+        "id": "peliculas-tema-09",
+        "nombre": "Suite orquestal (La Bella y la Bestia)",
+        "sinCoro": true,
+        "preciosUsd": {
+          "peliculas-full-score-orquesta": 50,
+          "peliculas-partes-individuales": 75
+        },
+        "precioPromoUsd": null
+      }
+    ],
+    "opciones": [
+      {
+        "id": "peliculas-full-score-orquesta",
+        "nombre": "Full Score Orquesta",
+        "descripcion": "Partitura completa para director y orquesta sinfónica.",
+        "price": "US$ XX",
+        "priceCompleto": "US$ XX",
+        "priceTema": "US$ XX",
+        "precioCompletoUsd": null,
+        "precioTemaUsd": null
+      },
+      {
+        "id": "peliculas-score-coro",
+        "nombre": "Score Coro",
+        "descripcion": "Partitura coral para ensayo y presentación.",
+        "price": "US$ XX",
+        "priceCompleto": "US$ XX",
+        "priceTema": "US$ XX",
+        "precioCompletoUsd": null,
+        "precioTemaUsd": null
+      },
+      {
+        "id": "peliculas-partes-individuales",
+        "nombre": "Partituras de orquesta (set completo)",
+        "descripcion": "Incluye todas las partichelas del elenco. No se vende cada instrumento por separado.",
+        "price": "US$ XX",
+        "priceCompleto": "US$ XX",
+        "priceTema": "US$ XX",
+        "precioCompletoUsd": null,
+        "precioTemaUsd": null
+      }
+    ]
   }
 ]

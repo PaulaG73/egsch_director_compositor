@@ -6,7 +6,7 @@ module.exports = defineConfig({
   pages: {
     index: {
       entry: 'src/main.js',
-      title: 'Eduardo Gajardo Schmidlin. Director de Orquesta, Compositor y Orquestador',
+      title: 'Arreglos - Orquestaciones - Transcripciones - Composiciones. «Llevando tu música a la partitura y al escenario».',
     },
   },
   devServer: {

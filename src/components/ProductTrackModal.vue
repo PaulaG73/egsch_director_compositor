@@ -197,13 +197,22 @@ function unitUsdForOpcion(opcion) {
   )
 }
 
-/** Score Coro no aplica si alguna obra seleccionada no tiene coro. */
+/** Score Coro no aplica solo si ninguna obra de la selección tiene coro. */
 function isOpcionDisponible(opcion) {
   if (!opcion) return false
-  if (/score-coro/i.test(String(opcion.id)) && props.temas.some((t) => t.sinCoro)) {
-    return false
+  if (/score-coro/i.test(String(opcion.id))) {
+    return props.temas.some((t) => !t.sinCoro)
   }
   return true
+}
+
+/** Obras a las que aplica una opción (p. ej. Score Coro excluye sinCoro). */
+function temasParaOpcion(opcion) {
+  if (!opcion) return []
+  return props.temas.filter((tema) => {
+    if (tema.sinCoro && /score-coro/i.test(String(opcion.id))) return false
+    return true
+  })
 }
 
 /** Precio USD de una obra concreta para una opción (p. ej. Full Score por tema). */
@@ -229,12 +238,15 @@ function lineTotalUsd(opcion) {
     return temaUsdForOpcion(props.temas[0], opcion) ?? unitUsdForOpcion(opcion)
   }
 
-  const hasPerTema = props.temas.some(
+  const aplicables = temasParaOpcion(opcion)
+  if (!aplicables.length) return null
+
+  const hasPerTema = aplicables.some(
     (tema) => parseUsdAmount(tema?.preciosUsd?.[opcion.id]) != null,
   )
   if (hasPerTema) {
     let sum = 0
-    for (const tema of props.temas) {
+    for (const tema of aplicables) {
       const p = temaUsdForOpcion(tema, opcion)
       if (p == null) return null
       sum += p
@@ -244,18 +256,13 @@ function lineTotalUsd(opcion) {
 
   const unit = unitUsdForOpcion(opcion)
   if (unit == null) return null
-  return unit * Math.max(temaCount.value, 1)
+  return unit * Math.max(aplicables.length, 1)
 }
 
 function unitPriceLabel(opcion) {
   if (!isOpcionDisponible(opcion)) return 'No aplica (sin coro)'
   const line = lineTotalUsd(opcion)
-  if (line != null && (isCompleto.value || temaCount.value === 1)) {
-    return formatUsd(line)
-  }
-  if (line != null && temaCount.value > 1) {
-    return formatUsd(line)
-  }
+  if (line != null) return formatUsd(line)
   if (isCompleto.value) return opcion?.priceCompleto || opcion?.price || 'US$ XX'
   return opcion?.priceTema || opcion?.price || 'US$ XX'
 }
@@ -263,13 +270,19 @@ function unitPriceLabel(opcion) {
 function priceForOpcion(opcion) {
   if (!isOpcionDisponible(opcion)) return 'No aplica (sin coro en la selección)'
   const line = lineTotalUsd(opcion)
+  const aplicables = temasParaOpcion(opcion)
+  const n = aplicables.length
   if (line != null) {
     if (isCompleto.value || temaCount.value <= 1) return formatUsd(line)
-    return `Suma de ${temaCount.value} obras: ${formatUsd(line)}`
+    if (n < temaCount.value) {
+      return `Suma de ${n} de ${temaCount.value} obras: ${formatUsd(line)}`
+    }
+    return `Suma de ${n} obras: ${formatUsd(line)}`
   }
   const unitLabel = unitPriceLabel(opcion)
   if (isCompleto.value || temaCount.value <= 1) return unitLabel
-  return `${unitLabel} × ${temaCount.value} obras`
+  if (n < temaCount.value) return `${unitLabel} × ${n} de ${temaCount.value} obras`
+  return `${unitLabel} × ${n} obras`
 }
 
 const totalUsd = computed(() => {
@@ -289,19 +302,22 @@ const totalLabel = computed(() => {
   return `Total: ${formatUsd(totalUsd.value)}`
 })
 
-const opcionesDisponibles = computed(() =>
-  props.opciones.filter((o) => isOpcionDisponible(o)),
-)
+/** Cada obra tiene seleccionadas todas las opciones que le aplican. */
+function temaTieneTodasSusOpciones(tema) {
+  if (!tema) return false
+  const aplicables = props.opciones.filter((opcion) => {
+    if (!isOpcionDisponible(opcion)) return false
+    if (tema.sinCoro && /score-coro/i.test(String(opcion.id))) return false
+    return true
+  })
+  if (!aplicables.length) return false
+  return aplicables.every((o) => selectedFormatoIds.value.includes(o.id))
+}
 
-const allOpcionesSeleccionadas = computed(() => {
-  const disponibles = opcionesDisponibles.value
-  if (!disponibles.length || !selectedFormatos.value.length) return false
-  return disponibles.every((o) => selectedFormatoIds.value.includes(o.id))
-})
-
-/** Precio promo si están todas las opciones aplicables de la selección. */
+/** Precio promo si cada obra tiene todas sus opciones aplicables marcadas. */
 const promoUsd = computed(() => {
-  if (!allOpcionesSeleccionadas.value || !props.temas.length) return null
+  if (!props.temas.length || !selectedFormatos.value.length) return null
+  if (!props.temas.every((tema) => temaTieneTodasSusOpciones(tema))) return null
   let sum = 0
   for (const tema of props.temas) {
     const promo = parseUsdAmount(tema.precioPromoUsd)

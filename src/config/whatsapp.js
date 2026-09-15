@@ -83,24 +83,32 @@ function priceForWhatsAppMessage(price) {
   return price.trim().replace(/\$/g, '').replace(/\s+/g, ' ').trim()
 }
 
-/** CTA Contáctame del footer: solo texto, sin enlace. */
+/** CTA Contáctame del footer. Incluye página de vista previa con el título del hero. */
 export function getWhatsAppFooterUrl() {
   const digits = digitsOnly()
   if (!digits) return '#'
 
-  const text =
-    'Hola Eduardo, estoy escribiendo desde tu página web y quisiera conversar contigo sobre un tema en particular. Estás disponible?'
+  const previewUrl = `${WHATSAPP_FALLBACK_SITE_ORIGIN}/compartir.html`
+  const text = [
+    'Hola Eduardo, estoy escribiendo desde tu página web y quisiera conversar contigo sobre un tema en particular. Estás disponible?',
+    '',
+    previewUrl,
+  ].join('\n')
 
   return `https://api.whatsapp.com/send?phone=${digits}&text=${encodeURIComponent(text)}`
 }
 
-/** CTA Contáctame del hero. */
+/** CTA Contáctame del hero. Incluye página de vista previa con el título del hero. */
 export function getWhatsAppHeroUrl() {
   const digits = digitsOnly()
   if (!digits) return '#'
 
-  const text =
-    'Hola Eduardo, te contacto desde tu página web. Me gustaría conversar contigo sobre un proyecto musical.'
+  const previewUrl = `${WHATSAPP_FALLBACK_SITE_ORIGIN}/compartir.html`
+  const text = [
+    'Hola Eduardo, te contacto desde tu página web. Me gustaría conversar contigo sobre un proyecto musical.',
+    '',
+    previewUrl,
+  ].join('\n')
 
   return `https://api.whatsapp.com/send?phone=${digits}&text=${encodeURIComponent(text)}`
 }

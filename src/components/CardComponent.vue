@@ -27,7 +27,7 @@
       <template v-if="hasTemas">
         <p class="card-temas-label mb-0">Obras disponibles</p>
         <p class="card-temas-hint mb-0">
-          Marca una o varias canciones. El concierto completo desmarca el resto.
+          Marca una o varias obras. El concierto completo desmarca el resto.
         </p>
         <ul class="card-temas list-unstyled mb-0 flex-grow-1 text-start min-w-0">
           <li
@@ -299,10 +299,12 @@ function closeTrackModal() {
 
 .card-title {
   font-family: var(--font-display);
-  overflow-wrap: break-word;
-  font-size: clamp(0.95rem, 2.6vw, 1.15rem);
-  line-height: 1.25;
+  font-size: clamp(0.72rem, 1.55vw, 0.92rem);
+  line-height: 1.2;
   font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card-subtitle {

@@ -80,25 +80,8 @@
             <li class="nav-item">
               <a class="nav-link" href="#servicios">{{ t('nav.servicios') }}</a>
             </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="productosDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                {{ t('nav.productos') }}
-              </a>
-              <ul class="dropdown-menu dropdown-menu-dark nav-dropdown" aria-labelledby="productosDropdown">
-                <li>
-                  <a class="dropdown-item" href="#productos-sinfonicos">{{ t('nav.productosSinfonicos') }}</a>
-                </li>
-                <li>
-                  <a class="dropdown-item" href="#musica-peliculas">{{ t('nav.musicaPeliculas') }}</a>
-                </li>
-              </ul>
+            <li class="nav-item">
+              <a class="nav-link" href="#productos-sinfonicos">{{ t('nav.productos') }}</a>
             </li>
             <li v-for="link in navLinks" :key="link.href" class="nav-item">
               <a class="nav-link" :href="link.href">{{ t(link.labelKey) }}</a>
@@ -212,37 +195,15 @@ function setLanguage(code) {
 }
 
 .nav-maestro .navbar-nav .nav-link:hover,
-.nav-maestro .navbar-nav .nav-link:focus-visible,
-.nav-maestro .navbar-nav .nav-link.show {
+.nav-maestro .navbar-nav .nav-link:focus-visible {
   color: #fff;
   background-color: rgba(255, 255, 255, 0.1);
   transform: translateY(-2px);
 }
 
 .nav-maestro .navbar-nav .nav-link:hover::after,
-.nav-maestro .navbar-nav .nav-link:focus-visible::after,
-.nav-maestro .navbar-nav .nav-link.show::after {
+.nav-maestro .navbar-nav .nav-link:focus-visible::after {
   width: calc(100% - 1.1rem);
-}
-
-.nav-dropdown {
-  --bs-dropdown-bg: var(--ms-deep);
-  --bs-dropdown-link-color: rgba(255, 255, 255, 0.9);
-  --bs-dropdown-link-hover-bg: rgba(var(--ms-accent-rgb), 0.35);
-  --bs-dropdown-link-hover-color: #fff;
-  --bs-dropdown-link-active-bg: rgba(var(--ms-accent-rgb), 0.45);
-  --bs-dropdown-border-color: var(--ms-border);
-  font-family: var(--font-body);
-  font-size: 0.9rem;
-  padding: 0.4rem;
-  border-radius: 0.5rem;
-  margin-top: 0.35rem;
-}
-
-.nav-dropdown .dropdown-item {
-  border-radius: 0.35rem;
-  font-weight: 600;
-  padding: 0.45rem 0.85rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -251,8 +212,7 @@ function setLanguage(code) {
   }
 
   .nav-maestro .navbar-nav .nav-link:hover,
-  .nav-maestro .navbar-nav .nav-link:focus-visible,
-  .nav-maestro .navbar-nav .nav-link.show {
+  .nav-maestro .navbar-nav .nav-link:focus-visible {
     transform: none;
   }
 

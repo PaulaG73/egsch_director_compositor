@@ -21,7 +21,21 @@
       </div>
       <div class="hero-texto text-center text-lg-start">
         <h1 class="hero-titulo mb-3">
-          <span class="hero-titulo__lineas">{{ t('hero.disciplines') }}</span>
+          <span class="hero-titulo__lineas" :aria-label="t('hero.disciplines')">
+            <template v-for="(item, index) in heroDisciplines" :key="index">
+              <span class="hero-titulo__item">{{ item }}</span>
+              <span
+                v-if="index === 1 && heroDisciplines.length > 2"
+                class="hero-titulo__break"
+                aria-hidden="true"
+              />
+              <span
+                v-else-if="index < heroDisciplines.length - 1"
+                class="hero-titulo__sep"
+                aria-hidden="true"
+              >·</span>
+            </template>
+          </span>
           <span class="hero-cita">{{ t('hero.quote') }}</span>
         </h1>
         <p class="hero-subtitulo mb-3 mb-md-4">
@@ -219,19 +233,6 @@
     <SectionScrollUp />
   </section>
 
-  <!-- Música de Películas -->
-  <section id="musica-peliculas" class="home-section home-section--slate pt-4 pt-md-5 pb-2 pb-md-3">
-    <div class="container text-center">
-      <h2 class="section-title mb-4">{{ t('nav.musicaPeliculas') }}</h2>
-    </div>
-    <ProductCarousel
-      :items="musicaPeliculas"
-      aria-label="música de películas / musicales"
-      compact
-    />
-    <SectionScrollUp />
-  </section>
-
   <!-- Testimonios (placeholder) -->
   <section id="testimonios" class="home-section home-section--ink py-4 py-md-5">
     <div class="container">
@@ -247,7 +248,7 @@
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import NavBar from '../components/NavBar'
 import FooterComponent from '../components/FooterComponent.vue'
 import ProductCarousel from '../components/ProductCarousel.vue'
@@ -255,13 +256,21 @@ import CardComponent from '../components/CardComponent.vue'
 import SectionScrollUp from '../components/SectionScrollUp.vue'
 import ServiceDetailModal from '../components/ServiceDetailModal.vue'
 import productosSinfonicos from '../data/productosSinfonicos.json'
-import musicaPeliculas from '../data/musicaPeliculas.json'
 import servicios from '../data/servicios.json'
 import { useI18n } from '@/i18n/useI18n'
 import { getWhatsAppHeroUrl } from '@/config/whatsapp'
 
 const { t } = useI18n()
 const heroWhatsappHref = getWhatsAppHeroUrl()
+
+/** Disciplinas del H1: en móvil van en 2 líneas (2 + 2). */
+const heroDisciplines = computed(() => {
+  const raw = t.value('hero.disciplines')
+  return String(raw)
+    .split(/\s*[—–-]\s*/)
+    .map((s) => s.trim())
+    .filter(Boolean)
+})
 
 /** Correo provisional para cotizaciones de servicios */
 const SERVICIOS_EMAIL = 'paulagajardosch@gmail.com'
@@ -875,21 +884,75 @@ onUnmounted(() => {
 }
 
 .hero-titulo__lineas {
-  display: block;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  column-gap: 0;
+  row-gap: 0.28rem;
+  max-width: 22rem;
+  margin-inline: auto;
+  font-size: clamp(0.92rem, 4.5vw, 1.15rem);
+  line-height: 1.4;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.hero-titulo__item {
   white-space: nowrap;
-  font-size: clamp(0.48rem, 2.55vw, 1.05rem);
-  letter-spacing: 0.015em;
+}
+
+.hero-titulo__sep {
+  margin-inline: 0.32rem 0.4rem;
+  opacity: 0.5;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.hero-titulo__break {
+  flex-basis: 100%;
+  width: 100%;
+  height: 0;
 }
 
 .hero-cita {
   display: block;
-  margin-top: 0.35rem;
+  margin-top: 0.55rem;
   font-style: italic;
   color: var(--ms-accent-on-dark);
   font-weight: 600;
   white-space: normal;
-  overflow-wrap: anywhere;
-  font-size: clamp(0.68rem, 3.2vw, 1.05rem);
+  overflow-wrap: break-word;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  font-size: clamp(0.9rem, 3.9vw, 1.1rem);
+}
+
+@media (min-width: 576px) {
+  .hero-titulo__lineas {
+    max-width: 28rem;
+    font-size: clamp(1rem, 2.8vw, 1.2rem);
+  }
+}
+
+@media (min-width: 992px) {
+  .hero-titulo__lineas {
+    justify-content: flex-start;
+    max-width: none;
+    margin-inline: 0;
+    row-gap: 0.2rem;
+    font-size: clamp(0.95rem, 1.15vw, 1.18rem);
+  }
+
+  .hero-titulo__break {
+    display: none;
+  }
+
+  .hero-cita {
+    margin-top: 0.45rem;
+  }
 }
 
 .hero-subtitulo {
@@ -1123,6 +1186,13 @@ onUnmounted(() => {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     max-width: 42rem;
     gap: 1.5rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .productos-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-width: 64rem;
   }
 }
 
