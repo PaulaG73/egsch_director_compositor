@@ -33,13 +33,15 @@ const { t } = useI18n()
 
 /** Placeholders de contacto — reemplazar cuando estén definitivos */
 const phoneDisplay = '+56 x xxxx xxxx'
-const emailDisplay = 'contacto@xxxxx.cl'
+/** Texto visible. El enlace sigue al correo de pruebas hasta que se indique lo contrario. */
+const emailDisplay = 'eduardo@gschoperastudio.cl'
+const emailMailto = 'paulagajardosch@gmail.com'
 const telHref = 'tel:+56000000000'
 const whatsappHref = getWhatsAppFooterUrl()
 
 const mailtoHref = computed(() => {
   const subject = encodeURIComponent(t.value('footer.mailSubject'))
-  return `mailto:${emailDisplay}?subject=${subject}`
+  return `mailto:${emailMailto}?subject=${subject}`
 })
 </script>
 

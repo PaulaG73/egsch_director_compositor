@@ -80,6 +80,48 @@
     </div>
   </section>
 
+  <!-- Servicios -->
+  <section id="servicios" class="home-section home-section--slate py-4 py-md-5">
+    <div class="container">
+      <h2 class="section-title mb-4 mb-md-5">{{ t('nav.servicios') }}</h2>
+    </div>
+    <ProductCarousel
+      :items="servicios"
+      aria-label="servicios"
+      compact
+      :hint="t('carousel.moreServices')"
+    >
+      <template #default="{ item: servicio }">
+        <article class="servicio-card h-100 d-flex flex-column">
+          <div v-if="servicio.image" class="servicio-card__media">
+            <img
+              :src="servicio.image"
+              :alt="t(`services.${servicio.titleKey}`)"
+              class="servicio-card__img"
+              loading="lazy"
+            >
+          </div>
+          <div class="servicio-card__body d-flex flex-column flex-grow-1">
+            <h3 class="servicio-card__titulo">{{ t(`services.${servicio.titleKey}`) }}</h3>
+            <p class="servicio-card__descripcion">{{ servicio.descripcion }}</p>
+            <div v-if="servicio.detalle" class="servicio-card__actions mt-auto">
+              <button
+                type="button"
+                class="btn btn-link servicio-card__mas"
+                @click="openServicioDetalle(servicio)"
+              >
+                Ver más
+              </button>
+            </div>
+          </div>
+        </article>
+      </template>
+    </ProductCarousel>
+    <div class="container">
+      <SectionScrollUp />
+    </div>
+  </section>
+
   <!-- Trayectoria -->
   <section id="trayectoria" class="home-section home-section--ink home-section--trayectoria py-4 py-md-5">
     <div class="container trayectoria">
@@ -154,63 +196,6 @@
     </div>
   </section>
 
-  <!-- Servicios -->
-  <section id="servicios" class="home-section home-section--slate py-4 py-md-5">
-    <div class="container">
-      <h2 class="section-title mb-4 mb-md-5">{{ t('nav.servicios') }}</h2>
-    </div>
-    <ProductCarousel
-      :items="servicios"
-      aria-label="servicios"
-      compact
-    >
-      <template #default="{ item: servicio }">
-        <article class="servicio-card h-100 d-flex flex-column">
-          <div v-if="!servicio.image" class="servicio-card__icon" aria-hidden="true">
-            <svg v-if="servicio.icon === 'composicion'" xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" viewBox="0 0 16 16">
-              <path d="M9 13c0 .552-.448 1-1 1s-1-.448-1-1V5c0-.552.448-1 1-1s1 .448 1 1z"/>
-              <path d="M6 12.036V13c0 .552-.448 1-1 1s-1-.448-1-1v-.964c-.725-.35-1.22-.998-1.22-1.752 0-.754.495-1.402 1.22-1.752V7c0-.552.448-1 1-1s1 .448 1 1v1.536c.725.35 1.22.998 1.22 1.752 0 .754-.495 1.402-1.22 1.752"/>
-            </svg>
-            <svg v-else-if="servicio.icon === 'arreglos'" xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" viewBox="0 0 16 16">
-              <path d="M4 0h5.293A1 1 0 0 1 10 .293L13.707 4a1 1 0 0 1 .293.707V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2m5.5 1.5v2a1 1 0 0 0 1 1h2z"/>
-              <path d="M4.603 12.087a.5.5 0 0 1-.707-.707L10.793 4.5a.5.5 0 1 1 .707.707z"/>
-            </svg>
-            <svg v-else-if="servicio.icon === 'direccion'" xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" viewBox="0 0 16 16">
-              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-              <path d="M6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814z"/>
-            </svg>
-            <svg v-else xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" viewBox="0 0 16 16">
-              <path d="M8 3a5 5 0 0 0-5 5v1a1 1 0 0 1-2 0V8a7 7 0 1 1 14 0v1a1 1 0 0 1-2 0V8a5 5 0 0 0-5-5"/>
-              <path d="M5 10a3 3 0 1 1 6 0v3a3 3 0 1 1-6 0z"/>
-            </svg>
-          </div>
-          <h3 class="servicio-card__titulo">{{ t(`services.${servicio.titleKey}`) }}</h3>
-          <p class="servicio-card__descripcion">{{ servicio.descripcion }}</p>
-          <div v-if="servicio.image" class="servicio-card__media">
-            <img
-              :src="servicio.image"
-              :alt="t(`services.${servicio.titleKey}`)"
-              class="servicio-card__img"
-              loading="lazy"
-            >
-          </div>
-          <div v-if="servicio.detalle" class="servicio-card__actions mt-auto">
-            <button
-              type="button"
-              class="btn btn-link servicio-card__mas"
-              @click="openServicioDetalle(servicio)"
-            >
-              Ver más
-            </button>
-          </div>
-        </article>
-      </template>
-    </ProductCarousel>
-    <div class="container">
-      <SectionScrollUp />
-    </div>
-  </section>
-
   <ServiceDetailModal
     :open="servicioModalOpen"
     :servicio="servicioModalActivo"
@@ -223,7 +208,10 @@
   <!-- Productos Sinfónicos -->
   <section id="productos-sinfonicos" class="home-section home-section--ink pt-4 pt-md-5 pb-2 pb-md-3">
     <div class="container text-center">
-      <h2 class="section-title mb-4">{{ t('nav.productosSinfonicos') }}</h2>
+      <h2 class="section-title section-title--stacked mb-4">
+        <span class="section-title__main">{{ t('nav.productosSinfonicos') }}</span>
+        <span class="section-title__sub">{{ t('nav.disponibilidadInmediata') }}</span>
+      </h2>
       <div v-if="!productosComoCarrusel" class="productos-grid">
         <CardComponent
           v-for="proyecto in productosSinfonicos"
@@ -464,6 +452,22 @@ onUnmounted(() => {
   position: relative;
   display: inline-block;
   padding-bottom: 0.75rem;
+}
+
+.section-title--stacked {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.section-title__sub {
+  font-family: var(--font-body);
+  font-size: clamp(0.95rem, 2.4vw, 1.12rem);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+  color: var(--ms-text-muted);
 }
 
 .section-title::after {
@@ -1139,7 +1143,8 @@ onUnmounted(() => {
 /* Servicios */
 .servicio-card {
   text-align: center;
-  padding: 1.5rem 1.15rem;
+  padding: 0;
+  overflow: hidden;
   border-radius: 0.85rem;
   background: var(--ms-surface);
   border: 1px solid var(--ms-border);
@@ -1151,16 +1156,8 @@ onUnmounted(() => {
   border-color: rgba(var(--ms-accent-rgb), 0.35);
 }
 
-.servicio-card__icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 3.25rem;
-  height: 3.25rem;
-  margin-bottom: 0.85rem;
-  border-radius: 50%;
-  background: rgba(var(--ms-accent-rgb), 0.18);
-  color: var(--ms-accent-on-dark);
+.servicio-card__body {
+  padding: 1.05rem 1.1rem 1.2rem;
 }
 
 .servicio-card__titulo {
@@ -1214,14 +1211,18 @@ onUnmounted(() => {
 }
 
 .servicio-card__media {
-  width: 78%;
-  max-width: 11.5rem;
-  margin: 0 auto 1.15rem;
-  padding: 0.35rem;
-  border: 1px solid rgba(var(--ms-accent-rgb), 0.45);
-  border-radius: 0.4rem;
-  background: rgba(255, 255, 255, 0.04);
+  position: relative;
+  width: 100%;
   flex-shrink: 0;
+}
+
+.servicio-card__media::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 38%;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent, var(--ms-surface));
 }
 
 .servicio-card__img {
@@ -1229,7 +1230,6 @@ onUnmounted(() => {
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
-  border-radius: 0.2rem;
 }
 
 .productos-grid {

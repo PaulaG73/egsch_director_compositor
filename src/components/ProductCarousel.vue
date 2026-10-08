@@ -1,4 +1,11 @@
 <template>
+  <div class="product-carousel">
+    <p class="product-carousel__hint">
+      <span>{{ hintText }}</span>
+      <svg class="product-carousel__hint-arrow" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+        <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
+      </svg>
+    </p>
   <div
     class="product-carousel-outer d-flex align-items-center gap-2 gap-sm-3 px-2 px-sm-3"
     :class="{ 'product-carousel-outer--compact': compact }"
@@ -59,11 +66,15 @@
       </svg>
     </button>
   </div>
+  </div>
 </template>
 
 <script setup>
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import CardComponent from './CardComponent.vue'
+import { useI18n } from '@/i18n/useI18n'
+
+const { t } = useI18n()
 
 const props = defineProps({
   items: {
@@ -78,7 +89,13 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  hint: {
+    type: String,
+    default: '',
+  },
 })
+
+const hintText = computed(() => props.hint.trim() || t.value('carousel.swipe'))
 
 const itemsLoop = computed(() => {
   if (!props.items?.length) return []
@@ -215,6 +232,41 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+.product-carousel__hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  margin: 0 0 0.35rem;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ms-accent-on-dark);
+}
+
+.product-carousel__hint-arrow {
+  animation: carousel-hint-nudge 1.35s ease-in-out infinite;
+}
+
+@keyframes carousel-hint-nudge {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-carousel__hint-arrow {
+    animation: none;
+  }
+}
+
 .product-carousel-outer {
   max-width: 100%;
   min-height: 0;
@@ -304,12 +356,6 @@ onUnmounted(() => {
 @media (min-width: 768px) {
   .product-carousel-slide {
     width: calc((var(--product-carousel-iw, 100%) - 2 * var(--product-gap)) / 3);
-  }
-}
-
-@media (min-width: 1200px) {
-  .product-carousel-outer--compact .product-carousel-slide {
-    width: calc((var(--product-carousel-iw, 100%) - 3 * var(--product-gap)) / 4);
   }
 }
 

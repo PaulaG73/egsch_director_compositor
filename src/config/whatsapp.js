@@ -2,6 +2,15 @@
 
 export const WHATSAPP_NUMBER_DIGITS = '56996450950'
 
+/**
+ * Mensaje de bienvenida del contacto general.
+ * No lo envía el sitio: pegarlo en WhatsApp Business
+ * (Ajustes → Herramientas para la empresa → Mensaje de bienvenida)
+ * cuando el número definitivo tenga esa cuenta.
+ */
+export const WHATSAPP_GREETING_MESSAGE =
+  'Hola, gracias por tu mensaje. Déjame tu nombre y te contactaré a la brevedad.'
+
 const PUBLIC_SITE_FROM_ENV = process.env.VUE_APP_PUBLIC_SITE_URL || ''
 const WHATSAPP_FALLBACK_SITE_ORIGIN = 'https://egschdirectorcompositor.netlify.app'
 

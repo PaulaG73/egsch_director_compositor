@@ -55,7 +55,7 @@
     },
     "ctaLabel": "Cotiza tu encargo aquí",
     "icon": "composicion",
-    "image": "/img/compositor3.jpg"
+    "image": "/img/servicio-composiciones.jpg"
   },
   {
     "id": 2,
@@ -110,7 +110,7 @@
     },
     "ctaLabel": "Escríbeme y diseñemos tu proyecto sinfónico",
     "icon": "arreglos",
-    "image": "/img/orquesta.jpg"
+    "image": "/img/servicio-orquestaciones.jpg"
   },
   {
     "id": 4,
@@ -165,7 +165,7 @@
     },
     "ctaLabel": "Envía tu audio o manuscrito y cotiza aquí",
     "icon": "consultoria",
-    "image": "/img/partitura.jpg"
+    "image": "/img/servicio-transcripcion.jpg"
   },
   {
     "id": 3,
@@ -238,7 +238,7 @@
     },
     "ctaLabel": "Cotiza tu arreglo o composición coral aquí",
     "icon": "direccion",
-    "image": "/img/coro.jpg"
+    "image": "/img/servicio-corales.jpg"
   },
   {
     "id": 5,
@@ -263,6 +263,6 @@
     },
     "ctaLabel": "Cotiza aquí",
     "icon": "direccion",
-    "image": "/img/coro.jpg"
+    "image": "/img/servicio-otros.jpg"
   }
 ]

@@ -75,10 +75,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-1 gap-lg-3 align-items-lg-center">
             <li class="nav-item">
-              <a class="nav-link" href="#trayectoria">{{ t('nav.trayectoria') }}</a>
+              <a class="nav-link" href="#servicios">{{ t('nav.servicios') }}</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#servicios">{{ t('nav.servicios') }}</a>
+              <a class="nav-link" href="#trayectoria">{{ t('nav.trayectoria') }}</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#productos-sinfonicos">{{ t('nav.productos') }}</a>

@@ -7,6 +7,7 @@ export const messages = {
       trayectoria: 'Trayectoria',
       productos: 'Productos',
       productosSinfonicos: 'Productos Sinfónicos',
+      disponibilidadInmediata: 'disponibilidad inmediata',
       musicaPeliculas: 'Música de Películas / Musicales',
       servicios: 'Servicios',
       testimonios: 'Testimonios',
@@ -25,6 +26,10 @@ export const messages = {
       rights: 'Derechos reservados © {year} PWebDev',
       scrollUp: 'Volver a la barra de navegación',
     },
+    carousel: {
+      swipe: 'Deslizar',
+      moreServices: 'ver más servicios',
+    },
     services: {
       composiciones: 'Composiciones',
       orquestaciones: 'Orquestaciones',
@@ -39,6 +44,7 @@ export const messages = {
       trayectoria: 'Career',
       productos: 'Catalogue',
       productosSinfonicos: 'Symphonic Catalogue',
+      disponibilidadInmediata: 'immediate availability',
       musicaPeliculas: 'Cinema in Concert / Musicals',
       servicios: 'Services',
       testimonios: 'Testimonials',
@@ -57,6 +63,10 @@ export const messages = {
       rights: 'All rights reserved © {year} PWebDev',
       scrollUp: 'Back to the navigation bar',
     },
+    carousel: {
+      swipe: 'Swipe',
+      moreServices: 'see more services',
+    },
     services: {
       composiciones: 'Compositions',
       orquestaciones: 'Orchestrations',
@@ -71,6 +81,7 @@ export const messages = {
       trayectoria: 'Parcours',
       productos: 'Catalogue',
       productosSinfonicos: 'Catalogue symphonique',
+      disponibilidadInmediata: 'disponibilité immédiate',
       musicaPeliculas: 'Musiques de Films en Concert / Comédies musicales',
       servicios: 'Services',
       testimonios: 'Témoignages',
@@ -89,6 +100,10 @@ export const messages = {
       rights: 'Tous droits réservés © {year} PWebDev',
       scrollUp: 'Retour à la barre de navigation',
     },
+    carousel: {
+      swipe: 'Glisser',
+      moreServices: 'voir plus de services',
+    },
     services: {
       composiciones: 'Composition',
       orquestaciones: 'Orchestration',
@@ -103,6 +118,7 @@ export const messages = {
       trayectoria: 'Werdegang',
       productos: 'Katalog',
       productosSinfonicos: 'Sinfonischer Katalog',
+      disponibilidadInmediata: 'sofortige Verfügbarkeit',
       musicaPeliculas: 'Filmmusik im Konzert / Musicals',
       servicios: 'Leistungen',
       testimonios: 'Stimmen',
@@ -121,6 +137,10 @@ export const messages = {
       rights: 'Alle Rechte vorbehalten © {year} PWebDev',
       scrollUp: 'Zurück zur Navigationsleiste',
     },
+    carousel: {
+      swipe: 'Wischen',
+      moreServices: 'weitere Leistungen',
+    },
     services: {
       composiciones: 'Kompositionen',
       orquestaciones: 'Orchestrationen',
@@ -135,6 +155,7 @@ export const messages = {
       trayectoria: 'Percorso',
       productos: 'Catalogo',
       productosSinfonicos: 'Catalogo sinfonico',
+      disponibilidadInmediata: 'disponibilità immediata',
       musicaPeliculas: 'Musiche da film in concerto / Musical',
       servicios: 'Servizi',
       testimonios: 'Testimonianze',
@@ -153,6 +174,10 @@ export const messages = {
       rights: 'Tutti i diritti riservati © {year} PWebDev',
       scrollUp: 'Torna alla barra di navigazione',
     },
+    carousel: {
+      swipe: 'Scorri',
+      moreServices: 'vedi altri servizi',
+    },
     services: {
       composiciones: 'Composizioni',
       orquestaciones: 'Orchestrazioni',
@@ -167,6 +192,7 @@ export const messages = {
       trayectoria: 'Trajetória',
       productos: 'Catálogo',
       productosSinfonicos: 'Catálogo Sinfônico',
+      disponibilidadInmediata: 'disponibilidade imediata',
       musicaPeliculas: 'Música de Filmes em Concerto / Musicais',
       servicios: 'Serviços',
       testimonios: 'Depoimentos',
@@ -184,6 +210,10 @@ export const messages = {
       mailSubject: 'Contato — Eduardo Gajardo Schmidlin',
       rights: 'Todos os direitos reservados © {year} PWebDev',
       scrollUp: 'Voltar à barra de navegação',
+    },
+    carousel: {
+      swipe: 'Deslize',
+      moreServices: 'ver mais serviços',
     },
     services: {
       composiciones: 'Composições',
