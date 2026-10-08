@@ -1,7 +1,8 @@
 <template>
   <div class="product-carousel">
     <p class="product-carousel__hint">
-      <span>{{ hintText }}</span>
+      <span class="product-carousel__hint-short">{{ t('carousel.swipe') }}</span>
+      <span v-if="hint" class="product-carousel__hint-long">{{ hint }}</span>
       <svg class="product-carousel__hint-arrow" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
         <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
       </svg>
@@ -94,8 +95,6 @@ const props = defineProps({
     default: '',
   },
 })
-
-const hintText = computed(() => props.hint.trim() || t.value('carousel.swipe'))
 
 const itemsLoop = computed(() => {
   if (!props.items?.length) return []
@@ -244,6 +243,20 @@ onUnmounted(() => {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ms-accent-on-dark);
+}
+
+.product-carousel__hint-long {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .product-carousel__hint-long {
+    display: inline;
+  }
+
+  .product-carousel__hint:has(.product-carousel__hint-long) .product-carousel__hint-short {
+    display: none;
+  }
 }
 
 .product-carousel__hint-arrow {

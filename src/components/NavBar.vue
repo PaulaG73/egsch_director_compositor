@@ -60,20 +60,8 @@
           </button>
         </div>
 
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          :aria-label="t('nav.openMenu')"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-1 gap-lg-3 align-items-lg-center">
+        <div class="navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mx-auto mb-0 gap-1 gap-lg-3 align-items-lg-center">
             <li class="nav-item">
               <a class="nav-link" href="#servicios">{{ t('nav.servicios') }}</a>
             </li>
@@ -126,35 +114,42 @@ function setLanguage(code) {
 
 .lang-switcher {
   order: 1;
-  margin-left: auto;
   flex-shrink: 1;
-  max-width: calc(100% - 3.5rem);
-  justify-content: flex-end;
-}
-
-.navbar-toggler {
-  order: 2;
-  margin-left: 0.5rem;
-  border-color: rgba(255, 255, 255, 0.35);
+  width: 100%;
+  justify-content: center;
 }
 
 .navbar-collapse {
   order: 3;
+  display: flex !important;
   flex-basis: 100%;
+}
+
+.nav-maestro .navbar-nav {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
 }
 
 @media (min-width: 992px) {
   .lang-switcher {
     order: 3;
+    width: auto;
     margin-left: 1rem;
-    max-width: none;
     flex-shrink: 0;
+    justify-content: flex-end;
   }
 
   .navbar-collapse {
     order: 2;
     flex-basis: auto;
     flex-grow: 1;
+  }
+
+  .nav-maestro .navbar-nav {
+    width: auto;
+    flex-wrap: nowrap;
   }
 }
 
