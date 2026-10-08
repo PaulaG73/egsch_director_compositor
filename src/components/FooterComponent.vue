@@ -30,6 +30,7 @@ import { getWhatsAppFooterUrl } from '@/config/whatsapp'
 import { useI18n } from '@/i18n/useI18n'
 
 const { t } = useI18n()
+const whatsappHref = computed(() => getWhatsAppFooterUrl(t.value('whatsapp.footer')))
 
 /** Placeholders de contacto — reemplazar cuando estén definitivos */
 const phoneDisplay = '+56 x xxxx xxxx'
@@ -37,7 +38,6 @@ const phoneDisplay = '+56 x xxxx xxxx'
 const emailDisplay = 'eduardo@gschoperastudio.cl'
 const emailMailto = 'paulagajardosch@gmail.com'
 const telHref = 'tel:+56000000000'
-const whatsappHref = getWhatsAppFooterUrl()
 
 const mailtoHref = computed(() => {
   const subject = encodeURIComponent(t.value('footer.mailSubject'))

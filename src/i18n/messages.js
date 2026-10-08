@@ -1,4 +1,6 @@
-/** Traducciones navbar, hero, footer y servicios (ES / EN / FR / DE / IT / PT) */
+/** Traducciones de interfaz (ES / EN / FR / DE / IT / PT). Los textos largos de servicios viven en serviciosCopy.js. */
+
+import { siteCopy } from './siteCopy'
 
 export const messages = {
   es: {
@@ -30,6 +32,13 @@ export const messages = {
       swipe: 'Deslizar',
       moreServices: 'ver más servicios',
     },
+    video: {
+      region: 'Reproductor de video',
+      label: 'Video próximamente',
+    },
+    testimonials: {
+      soon: 'Contenido próximamente.',
+    },
     services: {
       composiciones: 'Composiciones',
       orquestaciones: 'Orquestaciones',
@@ -44,16 +53,16 @@ export const messages = {
       trayectoria: 'Career',
       productos: 'Catalogue',
       productosSinfonicos: 'Symphonic Catalogue',
-      disponibilidadInmediata: 'immediate availability',
+      disponibilidadInmediata: 'available now',
       musicaPeliculas: 'Cinema in Concert / Musicals',
       servicios: 'Services',
       testimonios: 'Testimonials',
       contacto: 'Contact',
     },
     hero: {
-      role: 'Conductor, Composer & Orchestrator',
+      role: 'Conductor, Composer and Orchestrator',
       disciplines: 'Arrangements — Orchestrations — Transcriptions — Compositions',
-      quote: '«Bringing your music to the score\nand to the stage».',
+      quote: '«Your music, on the score\nand on the stage».',
       photoAlt: 'Eduardo Gajardo Schmidlin, Conductor, Composer and Orchestrator',
       cta: 'Contact me',
     },
@@ -66,6 +75,13 @@ export const messages = {
     carousel: {
       swipe: 'Swipe',
       moreServices: 'see more services',
+    },
+    video: {
+      region: 'Video player',
+      label: 'Video coming soon',
+    },
+    testimonials: {
+      soon: 'Coming soon.',
     },
     services: {
       composiciones: 'Compositions',
@@ -81,7 +97,7 @@ export const messages = {
       trayectoria: 'Parcours',
       productos: 'Catalogue',
       productosSinfonicos: 'Catalogue symphonique',
-      disponibilidadInmediata: 'disponibilité immédiate',
+      disponibilidadInmediata: 'disponibles dès maintenant',
       musicaPeliculas: 'Musiques de Films en Concert / Comédies musicales',
       servicios: 'Services',
       testimonios: 'Témoignages',
@@ -90,7 +106,7 @@ export const messages = {
     hero: {
       role: 'Chef d’orchestre, Compositeur et Orchestrateur',
       disciplines: 'Arrangement — Orchestration — Transcription — Composition',
-      quote: '« Porter votre musique à la partition\net à la scène ».',
+      quote: '«Votre musique, sur la partition\net sur la scène».',
       photoAlt: 'Eduardo Gajardo Schmidlin, Chef d’orchestre, Compositeur et Orchestrateur',
       cta: 'Contactez-moi',
     },
@@ -103,6 +119,13 @@ export const messages = {
     carousel: {
       swipe: 'Glisser',
       moreServices: 'voir plus de services',
+    },
+    video: {
+      region: 'Lecteur vidéo',
+      label: 'Vidéo à venir',
+    },
+    testimonials: {
+      soon: 'À venir.',
     },
     services: {
       composiciones: 'Composition',
@@ -118,7 +141,7 @@ export const messages = {
       trayectoria: 'Werdegang',
       productos: 'Katalog',
       productosSinfonicos: 'Sinfonischer Katalog',
-      disponibilidadInmediata: 'sofortige Verfügbarkeit',
+      disponibilidadInmediata: 'sofort verfügbar',
       musicaPeliculas: 'Filmmusik im Konzert / Musicals',
       servicios: 'Leistungen',
       testimonios: 'Stimmen',
@@ -127,7 +150,7 @@ export const messages = {
     hero: {
       role: 'Dirigent, Komponist und Orchestrator',
       disciplines: 'Arrangements — Orchestration — Transkriptionen — Komposition',
-      quote: '«Ihre Musik auf die Partitur\nund auf die Bühne bringen».',
+      quote: '«Ihre Musik, in der Partitur\nund auf der Bühne».',
       photoAlt: 'Eduardo Gajardo Schmidlin, Dirigent, Komponist und Orchestrator',
       cta: 'Kontaktieren Sie mich',
     },
@@ -140,6 +163,13 @@ export const messages = {
     carousel: {
       swipe: 'Wischen',
       moreServices: 'weitere Leistungen',
+    },
+    video: {
+      region: 'Videoplayer',
+      label: 'Video in Kürze',
+    },
+    testimonials: {
+      soon: 'Folgt in Kürze.',
     },
     services: {
       composiciones: 'Kompositionen',
@@ -155,7 +185,7 @@ export const messages = {
       trayectoria: 'Percorso',
       productos: 'Catalogo',
       productosSinfonicos: 'Catalogo sinfonico',
-      disponibilidadInmediata: 'disponibilità immediata',
+      disponibilidadInmediata: 'subito disponibili',
       musicaPeliculas: 'Musiche da film in concerto / Musical',
       servicios: 'Servizi',
       testimonios: 'Testimonianze',
@@ -164,7 +194,7 @@ export const messages = {
     hero: {
       role: 'Direttore d’orchestra, Compositore e Orchestratore',
       disciplines: 'Arrangiamenti — Orchestrazioni — Trascrizioni — Composizioni',
-      quote: '«Portare la tua musica sulla partitura\ne sul palcoscenico».',
+      quote: '«La tua musica, in partitura\ne sul palcoscenico».',
       photoAlt: 'Eduardo Gajardo Schmidlin, Direttore d’orchestra, Compositore e Orchestratore',
       cta: 'Contattami',
     },
@@ -177,6 +207,13 @@ export const messages = {
     carousel: {
       swipe: 'Scorri',
       moreServices: 'vedi altri servizi',
+    },
+    video: {
+      region: 'Lettore video',
+      label: 'Video in arrivo',
+    },
+    testimonials: {
+      soon: 'In arrivo.',
     },
     services: {
       composiciones: 'Composizioni',
@@ -192,7 +229,7 @@ export const messages = {
       trayectoria: 'Trajetória',
       productos: 'Catálogo',
       productosSinfonicos: 'Catálogo Sinfônico',
-      disponibilidadInmediata: 'disponibilidade imediata',
+      disponibilidadInmediata: 'disponíveis de imediato',
       musicaPeliculas: 'Música de Filmes em Concerto / Musicais',
       servicios: 'Serviços',
       testimonios: 'Depoimentos',
@@ -201,7 +238,7 @@ export const messages = {
     hero: {
       role: 'Maestro, Compositor e Orquestrador',
       disciplines: 'Arranjos — Orquestrações — Transcrições — Composições',
-      quote: '«Levando a sua música à partitura\ne ao palco».',
+      quote: '«A sua música, na partitura\ne no palco».',
       photoAlt: 'Eduardo Gajardo Schmidlin, Maestro, Compositor e Orquestrador',
       cta: 'Fale comigo',
     },
@@ -215,6 +252,13 @@ export const messages = {
       swipe: 'Deslize',
       moreServices: 'ver mais serviços',
     },
+    video: {
+      region: 'Reprodutor de vídeo',
+      label: 'Vídeo em breve',
+    },
+    testimonials: {
+      soon: 'Em breve.',
+    },
     services: {
       composiciones: 'Composições',
       orquestaciones: 'Orquestrações',
@@ -223,6 +267,10 @@ export const messages = {
       otrosArreglos: 'Outros arranjos',
     },
   },
+}
+
+for (const code of Object.keys(siteCopy)) {
+  if (messages[code]) Object.assign(messages[code], siteCopy[code])
 }
 
 export function translate(locale, path, vars) {

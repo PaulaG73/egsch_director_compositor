@@ -7,13 +7,13 @@
     ]"
   >
     <div class="card-img-wrap card-img-wrap--product flex-shrink-0">
-      <span v-if="agotado" class="product-card-img-badge product-card-agotado-badge">Agotado</span>
+      <span v-if="agotado" class="product-card-img-badge product-card-agotado-badge">{{ t('catalogue.soldOut') }}</span>
       <img
         :src="image"
         class="card-img-top"
         :class="{ 'product-card-img--agotado': agotado }"
         :style="imagePositionStyle"
-        :alt="`${title}${subtitle ? `. ${subtitle}` : ''}${agotado ? ' (agotado)' : ''}`"
+        :alt="`${title}${subtitle ? `. ${subtitle}` : ''}${agotado ? ` (${t('catalogue.soldOut')})` : ''}`"
         loading="lazy"
       >
     </div>
@@ -25,9 +25,9 @@
       </div>
 
       <template v-if="hasTemas">
-        <p class="card-temas-label mb-0">Obras disponibles</p>
+        <p class="card-temas-label mb-0">{{ t('catalogue.works') }}</p>
         <p class="card-temas-hint mb-0">
-          Marca una o varias obras. El concierto completo desmarca el resto.
+          {{ t('catalogue.worksHint') }}
         </p>
         <ul class="card-temas list-unstyled mb-0 flex-grow-1 text-start min-w-0">
           <li
@@ -60,15 +60,15 @@
             :disabled="!canOpenFormatos"
             @click="openTrackModal"
           >
-            Ver opciones
+            {{ t('catalogue.seeOptions') }}
           </button>
         </div>
       </template>
 
       <div v-else class="card-formatos-simple flex-grow-1 d-flex flex-column">
-        <p class="card-temas-label mb-0">Opciones disponibles</p>
+        <p class="card-temas-label mb-0">{{ t('catalogue.options') }}</p>
         <p class="card-temas-hint mb-0">
-          Puedes solicitar una o varias opciones (Full Score, Score Coro y partichelas).
+          {{ t('catalogue.optionsHint') }}
         </p>
         <div v-if="!agotado" class="card-temas-footer mt-auto">
           <button
@@ -76,7 +76,7 @@
             class="btn card-temas-cta"
             @click="openTrackModal"
           >
-            Ver opciones
+            {{ t('catalogue.seeOptions') }}
           </button>
         </div>
       </div>
@@ -98,6 +98,9 @@
 <script setup>
 import { computed, ref } from 'vue'
 import ProductTrackModal from './ProductTrackModal.vue'
+import { useI18n } from '@/i18n/useI18n'
+
+const { t } = useI18n()
 
 const props = defineProps({
   productId: {
@@ -176,9 +179,9 @@ const canOpenFormatos = computed(() => selectedTemas.value.length > 0)
 
 const resumenSeleccion = computed(() => {
   const n = selectedTemas.value.length
-  if (!n) return 'Ninguna obra seleccionada'
-  if (selectedTemas.value.some((t) => t.esCompleto)) return 'Concierto completo seleccionado'
-  return n === 1 ? '1 obra seleccionada' : `${n} obras seleccionadas`
+  if (!n) return t.value('catalogue.noneSelected')
+  if (selectedTemas.value.some((tema) => tema.esCompleto)) return t.value('catalogue.fullConcertSelected')
+  return n === 1 ? t.value('catalogue.oneWork') : t.value('catalogue.nWorks', { n })
 })
 
 const imagePositionStyle = computed(() => {

@@ -93,13 +93,13 @@ function priceForWhatsAppMessage(price) {
 }
 
 /** CTA Contáctame del footer. Incluye página de vista previa con el título del hero. */
-export function getWhatsAppFooterUrl() {
+export function getWhatsAppFooterUrl(message) {
   const digits = digitsOnly()
   if (!digits) return '#'
 
   const previewUrl = `${WHATSAPP_FALLBACK_SITE_ORIGIN}/compartir.html`
   const text = [
-    'Hola Eduardo, estoy escribiendo desde tu página web y quisiera conversar contigo sobre un tema en particular. Estás disponible?',
+    message || 'Hola Eduardo, estoy escribiendo desde tu página web y quisiera conversar contigo sobre un tema en particular. Estás disponible?',
     '',
     previewUrl,
   ].join('\n')
@@ -108,13 +108,13 @@ export function getWhatsAppFooterUrl() {
 }
 
 /** CTA Contáctame del hero. Incluye página de vista previa con el título del hero. */
-export function getWhatsAppHeroUrl() {
+export function getWhatsAppHeroUrl(message) {
   const digits = digitsOnly()
   if (!digits) return '#'
 
   const previewUrl = `${WHATSAPP_FALLBACK_SITE_ORIGIN}/compartir.html`
   const text = [
-    'Hola Eduardo, te contacto desde tu página web. Me gustaría conversar contigo sobre un proyecto musical.',
+    message || 'Hola Eduardo, te contacto desde tu página web. Me gustaría conversar contigo sobre un proyecto musical.',
     '',
     previewUrl,
   ].join('\n')
@@ -195,13 +195,14 @@ export function getWhatsAppProductSelectionUrl(payload) {
     formatos = [payload.formato]
   }
 
-  const parts = ['Hola, quiero solicitar:']
+  const labels = payload?.labels && typeof payload.labels === 'object' ? payload.labels : {}
+  const parts = [labels.intro || 'Hola, quiero solicitar:']
   if (title) parts.push(title)
   if (subtitle) parts.push(subtitle)
   parts.push('')
 
   if (temas.length) {
-    parts.push(temas.length === 1 ? 'Obra:' : 'Obras:')
+    parts.push(temas.length === 1 ? (labels.work || 'Obra:') : (labels.works || 'Obras:'))
     for (const tema of temas) {
       const nombre = typeof tema?.nombre === 'string' ? tema.nombre.trim() : ''
       if (!nombre) continue
@@ -211,7 +212,7 @@ export function getWhatsAppProductSelectionUrl(payload) {
   }
 
   if (formatos.length) {
-    parts.push(formatos.length === 1 ? 'Opción:' : 'Opciones:')
+    parts.push(formatos.length === 1 ? (labels.option || 'Opción:') : (labels.options || 'Opciones:'))
     for (const formato of formatos) {
       const nombre = typeof formato?.nombre === 'string' ? formato.nombre.trim() : ''
       if (!nombre) continue
@@ -230,7 +231,7 @@ export function getWhatsAppProductSelectionUrl(payload) {
       Number.isInteger(rounded)
         ? String(rounded)
         : rounded.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-    parts.push(`Total (USD): US$ ${text}`)
+    parts.push(labels.total ? String(labels.total).replace('{amount}', text) : `Total (USD): US$ ${text}`)
   } else if (typeof payload?.totalLabel === 'string' && payload.totalLabel.trim()) {
     parts.push(payload.totalLabel.trim())
   }
@@ -242,7 +243,7 @@ export function getWhatsAppProductSelectionUrl(payload) {
       Number.isInteger(rounded)
         ? String(rounded)
         : rounded.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-    parts.push(`Precio promo (todas las opciones): US$ ${text}`)
+    parts.push(labels.promo ? String(labels.promo).replace('{amount}', text) : `Precio promo (todas las opciones): US$ ${text}`)
   } else if (typeof payload?.promoLabel === 'string' && payload.promoLabel.trim()) {
     parts.push(payload.promoLabel.trim())
   }

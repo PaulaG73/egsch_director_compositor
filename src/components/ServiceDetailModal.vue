@@ -10,7 +10,7 @@
       <button
         type="button"
         class="servicio-modal__backdrop"
-        aria-label="Cerrar"
+        :aria-label="t('ui.close')"
         @click="emit('close')"
       />
       <div class="servicio-modal__panel" ref="panelRef">
@@ -21,7 +21,7 @@
           <button
             type="button"
             class="servicio-modal__close"
-            aria-label="Cerrar"
+            :aria-label="t('ui.close')"
             @click="emit('close')"
           >
             ×
@@ -81,6 +81,9 @@
 
 <script setup>
 import { computed, nextTick, onUnmounted, ref, watch } from 'vue'
+import { useI18n } from '@/i18n/useI18n'
+
+const { t } = useI18n()
 
 const props = defineProps({
   open: { type: Boolean, default: false },

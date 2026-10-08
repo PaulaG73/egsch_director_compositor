@@ -11,7 +11,7 @@
       <button
         type="button"
         class="track-modal__backdrop"
-        aria-label="Cerrar"
+        :aria-label="t('ui.close')"
         @click="close"
       />
       <div class="track-modal__panel" ref="panelRef">
@@ -23,7 +23,7 @@
           <button
             type="button"
             class="track-modal__close"
-            aria-label="Cerrar menú"
+            :aria-label="t('ui.closeMenu')"
             @click="close"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
@@ -33,7 +33,7 @@
         </header>
 
         <p class="track-modal__hint mb-0">
-          Marca una o varias opciones. Precios en dólares americanos (USD).
+          {{ t('catalogue.optionsPrompt') }}
         </p>
 
         <ul v-if="temas.length > 1" class="track-modal__seleccion list-unstyled mb-0">
@@ -79,7 +79,7 @@
             v-if="promoUsd != null"
             class="track-modal__promo mb-0"
           >
-            Precio promo (todas las opciones): {{ formatUsd(promoUsd) }}
+            {{ promoLabel }}
           </p>
           <a
             class="btn btn-whatsapp wa-pill-btn track-modal__wa"
@@ -88,7 +88,7 @@
             rel="noopener noreferrer"
             :aria-disabled="!canSubmit"
             :class="{ 'opacity-50 pe-none': !canSubmit }"
-            aria-label="Solicitar selección por WhatsApp"
+            :aria-label="t('catalogue.requestWhatsapp')"
             @click="onSubmitClick"
           >
             <svg
@@ -102,7 +102,7 @@
             >
               <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
             </svg>
-            <span class="wa-pill-label">Solicita aquí</span>
+            <span class="wa-pill-label">{{ t('catalogue.requestHere') }}</span>
           </a>
         </footer>
       </div>
@@ -113,6 +113,9 @@
 <script setup>
 import { computed, nextTick, ref, watch } from 'vue'
 import { getWhatsAppProductSelectionUrl, isWhatsAppConfigured } from '@/config/whatsapp'
+import { useI18n } from '@/i18n/useI18n'
+
+const { t } = useI18n()
 
 const props = defineProps({
   open: { type: Boolean, default: false },
@@ -147,15 +150,15 @@ const canSubmit = computed(
 )
 
 const modalTitle = computed(() => {
-  if (isCompleto.value) return 'Concierto completo'
-  if (temaCount.value === 1) return props.temas[0]?.nombre || 'Obra seleccionada'
-  return `${temaCount.value} obras seleccionadas`
+  if (isCompleto.value) return t.value('catalogue.fullConcert')
+  if (temaCount.value === 1) return props.temas[0]?.nombre || t.value('catalogue.selectedWork')
+  return t.value('catalogue.nWorks', { n: temaCount.value })
 })
 
 const resumenFormatos = computed(() => {
   const n = selectedFormatos.value.length
-  if (!n) return 'Ninguna opción seleccionada'
-  return n === 1 ? '1 opción seleccionada' : `${n} opciones seleccionadas`
+  if (!n) return t.value('catalogue.noneOption')
+  return n === 1 ? t.value('catalogue.oneOption') : t.value('catalogue.nOptions', { n })
 })
 
 /** Extrae un monto USD numérico desde número o texto (ignora placeholders tipo XX). */
@@ -260,7 +263,7 @@ function lineTotalUsd(opcion) {
 }
 
 function unitPriceLabel(opcion) {
-  if (!isOpcionDisponible(opcion)) return 'No aplica (sin coro)'
+  if (!isOpcionDisponible(opcion)) return t.value('catalogue.noChoirShort')
   const line = lineTotalUsd(opcion)
   if (line != null) return formatUsd(line)
   if (isCompleto.value) return opcion?.priceCompleto || opcion?.price || 'US$ XX'
@@ -268,21 +271,24 @@ function unitPriceLabel(opcion) {
 }
 
 function priceForOpcion(opcion) {
-  if (!isOpcionDisponible(opcion)) return 'No aplica (sin coro en la selección)'
+  if (!isOpcionDisponible(opcion)) return t.value('catalogue.noChoir')
   const line = lineTotalUsd(opcion)
   const aplicables = temasParaOpcion(opcion)
   const n = aplicables.length
+  const price = formatUsd(line)
   if (line != null) {
-    if (isCompleto.value || temaCount.value <= 1) return formatUsd(line)
+    if (isCompleto.value || temaCount.value <= 1) return price
     if (n < temaCount.value) {
-      return `Suma de ${n} de ${temaCount.value} obras: ${formatUsd(line)}`
+      return t.value('catalogue.sumOfSome', { n, total: temaCount.value, price })
     }
-    return `Suma de ${n} obras: ${formatUsd(line)}`
+    return t.value('catalogue.sumOf', { n, price })
   }
   const unitLabel = unitPriceLabel(opcion)
   if (isCompleto.value || temaCount.value <= 1) return unitLabel
-  if (n < temaCount.value) return `${unitLabel} × ${n} de ${temaCount.value} obras`
-  return `${unitLabel} × ${n} obras`
+  if (n < temaCount.value) {
+    return t.value('catalogue.timesSome', { price: unitLabel, n, total: temaCount.value })
+  }
+  return t.value('catalogue.times', { price: unitLabel, n })
 }
 
 const totalUsd = computed(() => {
@@ -297,9 +303,9 @@ const totalUsd = computed(() => {
 })
 
 const totalLabel = computed(() => {
-  if (!selectedFormatos.value.length) return 'Total: US$ 0'
-  if (totalUsd.value == null) return 'Total: por cotizar (precios provisionales)'
-  return `Total: ${formatUsd(totalUsd.value)}`
+  if (!selectedFormatos.value.length) return t.value('catalogue.totalZero')
+  if (totalUsd.value == null) return t.value('catalogue.totalQuote')
+  return t.value('catalogue.total', { price: formatUsd(totalUsd.value) })
 })
 
 /** Cada obra tiene seleccionadas todas las opciones que le aplican. */
@@ -329,7 +335,7 @@ const promoUsd = computed(() => {
 
 const promoLabel = computed(() => {
   if (promoUsd.value == null) return ''
-  return `Precio promo (todas las opciones): ${formatUsd(promoUsd.value)}`
+  return t.value('catalogue.promo', { price: formatUsd(promoUsd.value) })
 })
 
 const whatsappHref = computed(() => {
@@ -348,6 +354,15 @@ const whatsappHref = computed(() => {
     totalLabel: totalLabel.value,
     promoUsd: promoUsd.value,
     promoLabel: promoLabel.value,
+    labels: {
+      intro: t.value('catalogue.waIntro'),
+      work: t.value('catalogue.waWork'),
+      works: t.value('catalogue.waWorks'),
+      option: t.value('catalogue.waOption'),
+      options: t.value('catalogue.waOptions'),
+      total: t.value('catalogue.waTotal'),
+      promo: t.value('catalogue.waPromo'),
+    },
   })
 })
 

@@ -20,7 +20,7 @@
     <button
       type="button"
       class="product-carousel-arrow product-carousel-arrow--prev"
-      :aria-label="`Ver ${ariaLabel} anteriores`"
+      :aria-label="t('ui.prevSlide', { label: ariaLabel })"
       @click="scrollCarousel(-1)"
     >
       <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
@@ -32,7 +32,7 @@
       class="product-carousel-wrap flex-grow-1 min-w-0"
       tabindex="0"
       role="region"
-      :aria-label="`Carrusel de ${ariaLabel}, desplazamiento horizontal`"
+      :aria-label="t('ui.carouselRegion', { label: ariaLabel })"
     >
       <div class="product-carousel-inner">
         <div
@@ -59,7 +59,7 @@
     <button
       type="button"
       class="product-carousel-arrow product-carousel-arrow--next"
-      :aria-label="`Ver ${ariaLabel} siguientes`"
+      :aria-label="t('ui.nextSlide', { label: ariaLabel })"
       @click="scrollCarousel(1)"
     >
       <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">

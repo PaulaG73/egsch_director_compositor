@@ -68,12 +68,12 @@
   <section id="video" class="home-section home-section--slate py-2">
     <div class="container">
       <div class="video-player-shell">
-        <div class="video-player-placeholder" role="region" aria-label="Reproductor de video">
+        <div class="video-player-placeholder" role="region" :aria-label="t('video.region')">
           <svg class="video-player-icon" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
             <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
             <path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445"/>
           </svg>
-          <p class="video-player-label mb-0">Video próximamente</p>
+          <p class="video-player-label mb-0">{{ t('video.label') }}</p>
         </div>
       </div>
       <SectionScrollUp />
@@ -86,8 +86,8 @@
       <h2 class="section-title mb-4 mb-md-5">{{ t('nav.servicios') }}</h2>
     </div>
     <ProductCarousel
-      :items="servicios"
-      aria-label="servicios"
+      :items="serviciosLocalizados"
+      :aria-label="t('nav.servicios')"
       compact
       :hint="t('carousel.moreServices')"
     >
@@ -110,7 +110,7 @@
                 class="btn btn-link servicio-card__mas"
                 @click="openServicioDetalle(servicio)"
               >
-                Ver más
+                {{ t('ui.seeMore') }}
               </button>
             </div>
           </div>
@@ -135,7 +135,7 @@
         <button
           type="button"
           class="trayectoria__arrow trayectoria__arrow--prev"
-          aria-label="Hito anterior"
+          :aria-label="t('career.prev')"
           @click="trayectoriaPrev"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
@@ -149,7 +149,7 @@
             :style="{ '--trayectoria-slide': trayectoriaSlide }"
           >
             <article
-              v-for="(item, index) in trayectoriaItems"
+              v-for="(item, index) in trayectoriaLocalizada"
               :key="item.mark"
               class="trayectoria__item"
               :class="{ 'trayectoria__item--in-view': trayectoriaInView }"
@@ -167,7 +167,7 @@
         <button
           type="button"
           class="trayectoria__arrow trayectoria__arrow--next"
-          aria-label="Hito siguiente"
+          :aria-label="t('career.next')"
           @click="trayectoriaNext"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
@@ -176,16 +176,16 @@
         </button>
       </div>
 
-      <div class="trayectoria__dots" role="tablist" aria-label="Hitos de trayectoria">
+      <div class="trayectoria__dots" role="tablist" :aria-label="t('career.aria')">
         <button
-          v-for="(item, index) in trayectoriaItems"
+          v-for="(item, index) in trayectoriaLocalizada"
           :key="`dot-${item.mark}`"
           type="button"
           class="trayectoria__dot"
           :class="{ 'trayectoria__dot--active': trayectoriaSlide === index }"
           role="tab"
           :aria-selected="trayectoriaSlide === index"
-          :aria-label="`Ir a ${item.title}`"
+          :aria-label="t('career.goTo', { title: item.title })"
           @click="goToTrayectoria(index)"
         >
           {{ item.mark }}
@@ -214,7 +214,7 @@
       </h2>
       <div v-if="!productosComoCarrusel" class="productos-grid">
         <CardComponent
-          v-for="proyecto in productosSinfonicos"
+          v-for="proyecto in productosLocalizados"
           :key="proyecto.id"
           :product-id="proyecto.id"
           :title="proyecto.title"
@@ -229,8 +229,8 @@
     </div>
     <ProductCarousel
       v-if="productosComoCarrusel"
-      :items="productosSinfonicos"
-      aria-label="productos sinfónicos"
+      :items="productosLocalizados"
+      :aria-label="t('nav.productosSinfonicos')"
       compact
     />
     <SectionScrollUp />
@@ -240,7 +240,7 @@
   <section id="testimonios" class="home-section home-section--ink py-4 py-md-5">
     <div class="container">
       <h2 class="section-title mb-3">{{ t('nav.testimonios') }}</h2>
-      <p class="section-placeholder mb-0">Contenido próximamente.</p>
+      <p class="section-placeholder mb-0">{{ t('testimonials.soon') }}</p>
       <SectionScrollUp />
     </div>
   </section>
@@ -261,10 +261,13 @@ import ServiceDetailModal from '../components/ServiceDetailModal.vue'
 import productosSinfonicos from '../data/productosSinfonicos.json'
 import servicios from '../data/servicios.json'
 import { useI18n } from '@/i18n/useI18n'
+import { localizeProducts, localizeServicios } from '@/i18n/localizeContent'
 import { getWhatsAppHeroUrl } from '@/config/whatsapp'
 
-const { t } = useI18n()
-const heroWhatsappHref = getWhatsAppHeroUrl()
+const { locale, t } = useI18n()
+const heroWhatsappHref = computed(() => getWhatsAppHeroUrl(t.value('whatsapp.hero')))
+const serviciosLocalizados = computed(() => localizeServicios(servicios, locale.value))
+const productosLocalizados = computed(() => localizeProducts(productosSinfonicos, locale.value))
 
 /** Disciplinas del H1: en móvil van en 2 líneas (2 + 2). */
 const heroDisciplines = computed(() => {
@@ -279,10 +282,8 @@ const heroDisciplines = computed(() => {
 const SERVICIOS_EMAIL = 'paulagajardosch@gmail.com'
 
 function cotizaMailto(titulo) {
-  const subject = encodeURIComponent(`Cotización — ${titulo}`)
-  const body = encodeURIComponent(
-    `Hola,\n\nMe interesa cotizar el servicio de ${titulo}.\n\nSaludos.`,
-  )
+  const subject = encodeURIComponent(t.value('ui.quoteSubject', { title: titulo }))
+  const body = encodeURIComponent(t.value('ui.quoteBody', { title: titulo }))
   return `mailto:${SERVICIOS_EMAIL}?subject=${subject}&body=${body}`
 }
 
@@ -302,26 +303,13 @@ function closeServicioDetalle() {
 /** Foto del director en `public/img/image_maestro.jpg` */
 const heroFotoSrc = '/img/image_maestro.jpg'
 
-const trayectoriaItems = [
-  {
-    mark: 'I',
-    title: 'Dirección Sinfónica en La Araucanía',
-    text:
-      'Tras una destacada labor liderando la Orquesta Sinfónica Juvenil Armando Dufey (período consolidado hasta 2025), es actualmente director Titular de la Orquesta Sinfónica de la Universidad Católica de Temuco y de su Coro Sinfónico, impulsando la descentralización de la música clásica con montajes de alto nivel técnico.',
-  },
-  {
-    mark: 'II',
-    title: 'Grandes Óperas en Santiago',
-    text:
-      'En la escena capitalina, destaca de forma recurrente su dirección musical para las producciones de Merlín Comunicaciones. Al mando de la Orquesta Filodramática de Chile, ha liderado con rotundo éxito de crítica y público obras cumbres del repertorio universal, incluyendo títulos estelares como Carmen de Bizet en teatros de renombre como CorpArtes y las conmemoraciones líricas internacionales en homenaje a Puccini (Gianni Schicchi) y Tosca entre otras. Recientemente Pagliacci y Cavalleria Rusticana.',
-  },
-  {
-    mark: 'III',
-    title: 'Catálogo de Partituras desde el Podio',
-    text:
-      'Su experiencia guiando agrupaciones de cámara, coros y grandes orquestas sinfónicas en Europa y Chile se plasma en un catálogo exclusivo de arreglos, composiciones y orquestaciones. Cada partitura en esta tienda garantiza un balance sonoro óptimo, máxima legibilidad y soluciones orquestales pensadas por un director, para directores.',
-  },
-]
+const trayectoriaLocalizada = computed(() =>
+  ['i', 'ii', 'iii'].map((key, index) => ({
+    mark: ['I', 'II', 'III'][index],
+    title: t.value(`career.${key}.title`),
+    text: t.value(`career.${key}.text`),
+  })),
+)
 
 const heroFotoShellRef = ref(null)
 const heroFotoInView = ref(false)
@@ -342,7 +330,7 @@ function syncProductosLayout() {
 }
 
 function goToTrayectoria(index) {
-  const total = trayectoriaItems.length
+  const total = trayectoriaLocalizada.value.length
   trayectoriaSlide.value = ((index % total) + total) % total
 }
 
